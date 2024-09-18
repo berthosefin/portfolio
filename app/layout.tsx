@@ -13,7 +13,7 @@ const OxProto = localFont({
 export const metadata: Metadata = {
   title: 'Berthose Fin | Fullstack Developer',
   description:
-    'Explore the portfolio of Berthose Fin, a passionate fullstack developer in web development, Linux systems, and modern technologies like React, Next.js, and Prisma.'
+    'Discover the portfolio of Berthose Fin, a self-taught fullstack developer passionate about web development, open source, Linux, containerization, and customization through Linux ricing. Explore my work, projects, and technologies I love to work with.'
 }
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={cn(
-          'flex min-h-screen flex-col font-sans antialiased',
+          'flex min-h-screen flex-col antialiased',
           OxProto.className
         )}
       >
