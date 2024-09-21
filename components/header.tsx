@@ -1,7 +1,26 @@
+'use client'
+
 import Link from 'next/link'
 import { ThemeToggle } from './theme-toggle'
+import { usePathname } from 'next/navigation'
+
+const links = [
+  { name: 'Home', path: '/' },
+  { name: 'Skills', path: '/skills' },
+  { name: 'Projects', path: '/projects' },
+  { name: 'Contact', path: '/contact' }
+]
 
 export default function Header() {
+  const pathname = usePathname()
+
+  const isNavLinkActive = (path: string) => {
+    if (path === '/') {
+      return pathname === '/'
+    }
+    return pathname.startsWith(path)
+  }
+
   return (
     <header className='fixed inset-x-0 top-0 z-50 bg-background/75 py-6 backdrop-blur-sm'>
       <nav className='container flex max-w-3xl items-center justify-between'>
@@ -12,12 +31,16 @@ export default function Header() {
         </div>
 
         <ul className='flex items-center gap-6 text-sm font-light text-muted-foreground sm:gap-10'>
-          <li className='transition-colors hover:text-foreground'>
-            <Link href='/projects'>Projects</Link>
-          </li>
-          <li className='transition-colors hover:text-foreground'>
-            <Link href='/contact'>Contact</Link>
-          </li>
+          {links.map(link => (
+            <li
+              key={link.name}
+              className={`${
+                isNavLinkActive(link.path) && `text-foreground`
+              } transition-colors hover:text-foreground`}
+            >
+              <Link href={link.path}>{link.name}</Link>
+            </li>
+          ))}
         </ul>
 
         <div>

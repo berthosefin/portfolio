@@ -1,6 +1,6 @@
 import ContactForm from '@/components/contact-form'
 
-export default function Contact() {
+export default function ContactPage() {
   return (
     <section className='pb-24 pt-32'>
       <div className='container max-w-3xl'>

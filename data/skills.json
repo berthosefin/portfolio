@@ -1,0 +1,67 @@
+{
+  "categories": [
+    {
+      "name": "Programming Languages",
+      "skills": [
+        { "name": "JavaScript", "featured": true },
+        { "name": "TypeScript", "featured": true },
+        { "name": "Python", "featured": false }
+      ]
+    },
+    {
+      "name": "Frontend",
+      "skills": [
+        { "name": "React", "featured": false },
+        { "name": "Next.js", "featured": true },
+        { "name": "HTML5", "featured": false },
+        { "name": "CSS3", "featured": false },
+        { "name": "Tailwind CSS", "featured": true },
+        { "name": "shadcn/ui", "featured": true },
+        { "name": "Material-UI", "featured": false },
+        { "name": "Zustand", "featured": false },
+        { "name": "Redux", "featured": false },
+        { "name": "TanStack Query", "featured": false },
+        { "name": "TanStack Table", "featured": false },
+        { "name": "Zod", "featured": false }
+      ]
+    },
+    {
+      "name": "Backend",
+      "skills": [
+        { "name": "Node.js", "featured": false },
+        { "name": "NestJS", "featured": true },
+        { "name": "Express", "featured": false },
+        { "name": "Django", "featured": false }
+      ]
+    },
+    {
+      "name": "Databases",
+      "skills": [
+        { "name": "MongoDB", "featured": false },
+        { "name": "PostgreSQL", "featured": true },
+        { "name": "MySQL", "featured": false },
+        { "name": "SQLite", "featured": false },
+        { "name": "Prisma", "featured": true }
+      ]
+    },
+    {
+      "name": "DevOps & Tools",
+      "skills": [
+        { "name": "Docker", "featured": true },
+        { "name": "Git", "featured": true },
+        { "name": "Linux", "featured": false },
+        { "name": "Vim", "featured": false },
+        { "name": "Bash", "featured": false },
+        { "name": "Vercel", "featured": false },
+        { "name": "CI/CD", "featured": false }
+      ]
+    },
+    {
+      "name": "Testing & Quality Assurance",
+      "skills": [
+        { "name": "ESLint", "featured": false },
+        { "name": "Prettier", "featured": false }
+      ]
+    }
+  ]
+}

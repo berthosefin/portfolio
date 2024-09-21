@@ -1,4 +1,4 @@
-import Projects from '@/components/projects'
+import ProjectsWithFilter from '@/components/projects-with-filter'
 import { getProjects } from '@/lib/projects'
 
 export default async function ProjectsPage() {
@@ -7,9 +7,9 @@ export default async function ProjectsPage() {
   return (
     <section className='pb-24 pt-32'>
       <div className='container max-w-3xl'>
-        <h1 className='mb-4 text-2xl font-bold'>Projects</h1>
+        <h1 className='mb-8 text-2xl font-bold'>Projects</h1>
 
-        <Projects projects={projects} />
+        <ProjectsWithFilter projects={projects} />
       </div>
     </section>
   )

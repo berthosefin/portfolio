@@ -3,6 +3,13 @@ import Link from 'next/link'
 
 import { ProjectMetadata } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
+import { FileCode2 } from 'lucide-react'
+
+const ProjectPlaceholder = () => (
+  <div className='flex h-72 w-full items-center justify-center rounded-lg bg-muted sm:h-60'>
+    <FileCode2 className='h-24 w-24 text-muted-foreground/50' />
+  </div>
+)
 
 export default function Projects({
   projects
@@ -14,7 +21,7 @@ export default function Projects({
       {projects.map(project => (
         <li key={project.slug} className='group relative'>
           <Link href={`/projects/${project.slug}`}>
-            {project.image && (
+            {project.image ? (
               <div className='h-72 w-full overflow-hidden bg-muted sm:h-60'>
                 <Image
                   src={project.image}
@@ -23,6 +30,8 @@ export default function Projects({
                   className='rounded-lg object-cover object-center transition-transform duration-500 group-hover:scale-105'
                 />
               </div>
+            ) : (
+              <ProjectPlaceholder />
             )}
 
             <div className='absolute inset-[1px] rounded-lg bg-background/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
