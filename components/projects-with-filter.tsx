@@ -64,9 +64,9 @@ export default function ProjectsWithFilter({
 
       <Tabs defaultValue='all' value={activeTab} onValueChange={setActiveTab}>
         <TabsList className='grid w-full grid-cols-3'>
-          <TabsTrigger value='all'>All Projects</TabsTrigger>
-          <TabsTrigger value='personal'>Personal Projects</TabsTrigger>
-          <TabsTrigger value='contributions'>Project Contributions</TabsTrigger>
+          <TabsTrigger value='all'>All</TabsTrigger>
+          <TabsTrigger value='personal'>Personal</TabsTrigger>
+          <TabsTrigger value='contributions'>Contribution</TabsTrigger>
         </TabsList>
         <TabsContent value='all'>
           <Projects projects={categorizedProjects.all} />

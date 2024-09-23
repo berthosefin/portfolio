@@ -5,7 +5,6 @@ import { ThemeToggle } from './theme-toggle'
 import { usePathname } from 'next/navigation'
 
 const links = [
-  { name: 'Home', path: '/' },
   { name: 'Skills', path: '/skills' },
   { name: 'Projects', path: '/projects' },
   { name: 'Contact', path: '/contact' }
@@ -30,7 +29,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <ul className='flex items-center gap-6 text-sm font-light text-muted-foreground sm:gap-10'>
+        <ul className='flex items-center gap-3 text-sm font-light text-muted-foreground sm:gap-8'>
           {links.map(link => (
             <li
               key={link.name}
