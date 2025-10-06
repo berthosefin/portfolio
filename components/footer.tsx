@@ -1,3 +1,5 @@
+'use client'
+
 import { JSX, SVGProps } from 'react'
 
 const navigation = [
