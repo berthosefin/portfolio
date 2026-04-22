@@ -1,12 +1,20 @@
 'use server'
 
-import ContactFormEmail from '@/components/contact-form-email'
 import { ContactFormSchema } from '@/lib/schemas'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import { z } from 'zod'
 
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
-const resend = new Resend(process.env.RESEND_API_KEY)
+
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: Number(process.env.EMAIL_PORT),
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+})
 
 export async function sendEmail(data: ContactFormInputs) {
   const result = ContactFormSchema.safeParse(data)
@@ -17,17 +25,21 @@ export async function sendEmail(data: ContactFormInputs) {
 
   try {
     const { name, email, message } = result.data
-    const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to: ['berthosefin@gmail.com'],
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_FROM,
+      to: process.env.EMAIL_TO,
       subject: 'Contact form submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      react: ContactFormEmail({ name, email, message })
+      html: `
+        <div>
+          <h1>Contact form submission</h1>
+          <p>From <strong>${name}</strong> at ${email}</p>
+          <h2>Message:</h2>
+          <p>${message}</p>
+        </div>
+      `,
     })
-
-    if (!data || error) {
-      throw new Error('Failed to send email')
-    }
 
     return { success: true }
   } catch (error) {
