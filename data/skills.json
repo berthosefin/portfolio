@@ -18,11 +18,16 @@
         { "name": "Tailwind CSS", "featured": true },
         { "name": "shadcn/ui", "featured": true },
         { "name": "Material-UI", "featured": false },
-        { "name": "Zustand", "featured": false },
+        { "name": "Zustand", "featured": true },
         { "name": "Redux", "featured": false },
-        { "name": "TanStack Query", "featured": false },
+        { "name": "TanStack Query", "featured": true },
         { "name": "TanStack Table", "featured": false },
-        { "name": "Zod", "featured": false }
+        { "name": "Zod", "featured": false },
+        { "name": "Recharts", "featured": true },
+        { "name": "next-intl", "featured": false },
+        { "name": "date-fns", "featured": false },
+        { "name": "jose", "featured": false },
+        { "name": "Sonner", "featured": false }
       ]
     },
     {
