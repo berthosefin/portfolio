@@ -35,7 +35,7 @@ export default function Header() {
               <Link
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`relative transition-colors hover:text-foreground ${
+                className={`relative transition-colors hover:text-brand ${
                   isNavLinkActive(link.path)
                     ? 'text-foreground'
                     : 'text-muted-foreground'
