@@ -23,6 +23,7 @@
         { "name": "TanStack Query", "featured": true },
         { "name": "TanStack Table", "featured": false },
         { "name": "Zod", "featured": false },
+        { "name": "TanStack Start", "featured": true },
         { "name": "Recharts", "featured": true },
         { "name": "next-intl", "featured": false },
         { "name": "date-fns", "featured": false },
@@ -58,6 +59,8 @@
         { "name": "Vim", "featured": true },
         { "name": "Bash", "featured": true },
         { "name": "Vercel", "featured": false },
+        { "name": "Netlify", "featured": false },
+        { "name": "Render", "featured": false },
         { "name": "CI/CD", "featured": false }
       ]
     },
