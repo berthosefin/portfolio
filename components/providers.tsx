@@ -9,7 +9,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     <NextThemesProvider
       enableSystem
       attribute='class'
-      defaultTheme='system'
+      defaultTheme='dark'
       disableTransitionOnChange
     >
       {children}
