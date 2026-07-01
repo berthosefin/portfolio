@@ -17,6 +17,7 @@ export type ProjectMetadata = {
   publishedAt?: string
   projectUrl?: string
   liveUrl?: string
+  tags?: string[]
   slug: string
 }
 

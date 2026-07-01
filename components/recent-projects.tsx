@@ -15,7 +15,7 @@ export default async function RecentProjects() {
         <div className='mt-4 text-right'>
           <Link
             href='/projects'
-            className='inline-flex items-center gap-2 text-sm text-muted-foreground hover:underline'
+            className='inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand'
           >
             View all projects <ArrowRightIcon className='h-3 w-3' />
           </Link>

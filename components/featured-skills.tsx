@@ -12,13 +12,13 @@ export default function FeaturedSkills() {
   return (
     <section className='py-12'>
       <h2 className='mb-6 text-2xl font-bold'>Key Skills</h2>
-      <Card>
-        <CardContent className='p-4'>
+      <Card className='overflow-hidden border-border/50 transition-all duration-300 hover:border-brand/20 hover:shadow-md hover:shadow-brand/5'>
+        <CardContent className='p-5'>
           <div className='flex flex-wrap gap-2'>
             {featuredSkills.map(skill => (
               <span
                 key={skill.name}
-                className='rounded-full bg-primary/10 px-3 py-1 text-sm text-primary'
+                className='rounded-full bg-brand/10 px-3 py-1.5 text-sm font-medium text-brand transition-colors hover:bg-brand/20'
               >
                 {skill.name}
               </span>
@@ -29,7 +29,7 @@ export default function FeaturedSkills() {
       <div className='mt-4 text-right'>
         <Link
           href='/skills'
-          className='inline-flex items-center gap-2 text-sm text-muted-foreground hover:underline'
+          className='inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand'
         >
           View all skills <ArrowRightIcon className='h-3 w-3' />
         </Link>

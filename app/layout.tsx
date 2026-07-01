@@ -6,8 +6,9 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 
-const OxProto = localFont({
-  src: '../public/fonts/0xProto-Regular.woff2'
+const oxProto = localFont({
+  src: '../public/fonts/0xProto-Regular.woff2',
+  variable: '--font-mono'
 })
 
 export const metadata: Metadata = {
@@ -25,8 +26,8 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={cn(
-          'flex min-h-screen flex-col antialiased',
-          OxProto.className
+          'flex min-h-screen flex-col antialiased noise',
+          oxProto.variable
         )}
       >
         <ThemeProvider>
