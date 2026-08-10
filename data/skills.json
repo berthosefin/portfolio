@@ -5,7 +5,8 @@
       "skills": [
         { "name": "JavaScript", "featured": true },
         { "name": "TypeScript", "featured": true },
-        { "name": "Python", "featured": false }
+        { "name": "Python", "featured": false },
+        { "name": "Rust", "featured": true }
       ]
     },
     {
@@ -53,6 +54,7 @@
     {
       "name": "DevOps & Tools",
       "skills": [
+        { "name": "Cargo", "featured": true },
         { "name": "Docker", "featured": true },
         { "name": "Git", "featured": true },
         { "name": "Linux", "featured": true },

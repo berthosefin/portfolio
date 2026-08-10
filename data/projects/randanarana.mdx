@@ -1,0 +1,37 @@
+---
+title: randanarana
+summary:
+  Rust CLI tool that renames files in a directory to random alphanumeric names
+  while keeping their extensions, with undo, dry-run, and recursive mode.
+  Published on crates.io.
+role: 'Author'
+publishedAt: '2026-08-09'
+projectUrl: 'https://github.com/berthosefin/randanarana'
+liveUrl: 'https://crates.io/crates/randanarana'
+tags: ['Rust', 'CLI', 'clap', 'Cargo', 'CI/CD']
+---
+
+# randanarana
+
+Rename files in a directory to random alphanumeric names, keeping their
+extensions. A Rust reimplementation of an existing bash script, with tests,
+CI, and the same CLI and behavior. Published on crates.io.
+
+## Features
+
+- **Rename**: Files get random `a-zA-Z0-9` names, extensions are preserved
+- **Undo**: Restore the last rename run via a hidden manifest (`.randanarana-undo.json`)
+- **Dry-run**: Preview changes with `-n` without touching anything
+- **Recursive & Interactive**: Process subdirectories with `-r`, confirm each item with `-i`
+- **Options**: Custom length, prefix/suffix, force mode, dirs rename with `-D`
+- **Prebuilt binaries**: Available for Linux, macOS and Windows on GitHub Releases
+
+## Tech Stack
+
+- Rust (edition 2024)
+- clap (CLI parsing)
+- serde / serde_json (manifest)
+- anyhow (error handling)
+- rand (name generation)
+- assert_cmd + tempfile (integration tests)
+- CI with GitHub Actions, release-plz and cargo-dist
