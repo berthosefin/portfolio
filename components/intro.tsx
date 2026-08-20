@@ -20,11 +20,8 @@ export default function Intro() {
           </span>
         </div>
         <p className='mt-4 text-justify text-sm font-light leading-relaxed text-muted-foreground'>
-          I&apos;m a self-taught fullstack developer from Madagascar, passionate
-          about web development, open source, and Linux. My journey has been
-          driven by curiosity and a love for learning, exploring modern
-          technologies like React, Next.js, NestJS, and containerization, while
-          personalizing my workflow through Linux.
+          I&apos;m a self-taught developer, passionate about open source and Linux.
+          I enjoy building things, tinkering with Linux, and ricing my setup.
         </p>
       </div>
       <div className='relative shrink-0'>
