@@ -45,7 +45,7 @@ Simulated shell commands, flags, and path-like chrome (e.g., `$ tree ~/skills -P
 
 ### Requirement: Bilingual skill catalog
 
-The skill catalog data SHALL carry both an English and a French name for every category and for every domain-type skill that is not a technology proper noun (e.g., "Business Domain"/« Domaine métier », "Payroll Management"/« Gestion de paie »). Technology names (e.g., TypeScript, React) SHALL remain identical across locales. The skills tree SHALL derive its directory labels from the active locale's names, with accent-insensitive slugification, and its summary line SHALL be worded in the active locale.
+The skill catalog data SHALL carry both an English and a French name for every category and for every domain-type skill that is not a technology proper noun (e.g., "Business Domain"/« Domaine métier », "Payroll Management"/« Gestion de paie »). Technology names (e.g., TypeScript, React) SHALL remain identical across locales. The skills tree SHALL derive its directory labels from the active locale's names, with accent-insensitive slugification, and its summary line SHALL be worded in the active locale. Every surface that displays skill names — including the home featured-skills section — SHALL resolve domain-type skill names through the active locale's data.
 
 #### Scenario: French tree rendering
 
@@ -56,6 +56,11 @@ The skill catalog data SHALL carry both an English and a French name for every c
 
 - **WHEN** either locale renders the tree
 - **THEN** technology skill names are identical strings in both locales
+
+#### Scenario: Featured skills follow the locale
+
+- **WHEN** the home featured-skills section is rendered in French
+- **THEN** domain-type skills display their French names (e.g., « Comptabilité », « Gestion de paie ») while technology names remain unchanged
 
 ### Requirement: Localized project entries
 
@@ -89,3 +94,17 @@ Every localized page SHALL set a locale-correct `<html lang>` attribute, localiz
 
 - **WHEN** `/skills` is rendered
 - **THEN** its head contains alternate links for the English self URL, the French twin `/fr/skills`, and `x-default` pointing at the English URL
+
+### Requirement: Localized not-found boundaries
+
+Every locale route group SHALL provide a styled not-found boundary so any unmatched path or unknown dynamic segment within that group renders the site's terminal-styled 404 page rather than a framework-default error. The 404 copy, `<title>`, and metadata SHALL match the group's locale (French under `/fr`, English elsewhere), except simulated shell chrome which follows the terminal-chrome rule above; the browser tab SHALL always show a localized title, never the raw URL. The page SHALL offer navigation back to that locale's home.
+
+#### Scenario: Unknown project slug under French prefix
+
+- **WHEN** a visitor requests `/fr/projects/<slug>` where no such project exists
+- **THEN** the styled not-found page renders with French copy and a French `<title>`, not a framework-default error page
+
+#### Scenario: Unknown top-level path stays English
+
+- **WHEN** a visitor requests an unknown unprefixed path
+- **THEN** the styled not-found page renders with English copy and an English `<title>`
