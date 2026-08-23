@@ -1,10 +1,11 @@
 import GithubIcon from '@/components/github-icon'
 import MDXContent from '@/components/mdx-content'
+import Pane from '@/components/tui/pane'
+import PromptLine from '@/components/tui/prompt-line'
 import { Globe } from 'lucide-react'
 import { getProjectBySlug, getProjects } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
 import { ArrowLeftIcon } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
@@ -27,8 +28,7 @@ export default async function Project({
   }
 
   const { metadata, content } = project
-  const { title, image, role, publishedAt, projectUrl, liveUrl, tags } =
-    metadata
+  const { title, role, publishedAt, projectUrl, liveUrl, tags } = metadata
 
   return (
     <section className='pb-24 pt-28'>
@@ -43,21 +43,13 @@ export default async function Project({
           cd ../projects <ArrowLeftIcon className='inline h-3 w-3' />
         </Link>
 
-        {image && (
-          <div className='relative mt-6 h-80 w-full overflow-hidden border border-border sm:h-96'>
-            <Image
-              src={image}
-              alt={title || ''}
-              className='object-cover'
-              fill
-            />
-          </div>
-        )}
+        <div className='mt-6'>
+          <PromptLine command={`cd ~/projects/${slug} && cat README.md`} />
+        </div>
 
-        <header className='mt-8'>
-          <h1 className='text-2xl font-bold tracking-tight'>{title}</h1>
-          <p className='mt-2 text-xs text-muted-foreground'>
-            {role === 'Author' ? 'personal projects' : 'contributions'} ·{' '}
+        <Pane label={title} className='mt-4'>
+          <p className='text-xs uppercase tracking-wider text-muted-foreground'>
+            {role === 'Author' ? 'personal project' : 'contributions'} ·{' '}
             {formatDate(publishedAt ?? '')}
           </p>
 
@@ -93,7 +85,7 @@ export default async function Project({
               {`[${tags.join('] [')}]`}
             </p>
           )}
-        </header>
+        </Pane>
 
         <main className='prose mt-10 dark:prose-invert'>
           <MDXContent source={content} />

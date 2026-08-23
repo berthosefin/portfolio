@@ -2,9 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ProjectMetadata } from '@/lib/projects'
-import { LayoutGrid, User, Users, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import Projects from './projects'
 
@@ -14,23 +13,17 @@ export default function ProjectsWithFilter({
   projects: ProjectMetadata[]
 }) {
   const [query, setQuery] = useState('')
-  const [activeTab, setActiveTab] = useState('all')
 
   const filteredProjects = useMemo(() => {
-    return projects.filter(project =>
-      project.title?.toLowerCase().includes(query.toLowerCase())
+    const q = query.trim().toLowerCase()
+    if (!q) return projects
+    return projects.filter(
+      project =>
+        project.title?.toLowerCase().includes(q) ||
+        project.summary?.toLowerCase().includes(q) ||
+        project.tags?.some(tag => tag.toLowerCase().includes(q))
     )
   }, [projects, query])
-
-  const categorizedProjects = useMemo(() => {
-    return {
-      all: filteredProjects,
-      personal: filteredProjects.filter(project => project.role === 'Author'),
-      contributions: filteredProjects.filter(
-        project => project.role === 'Contributor'
-      )
-    }
-  }, [filteredProjects])
 
   const isFiltered = query.length > 0
   function resetFilter() {
@@ -43,7 +36,7 @@ export default function ProjectsWithFilter({
         <div className='relative flex-grow'>
           <Input
             type='text'
-            placeholder='Search projects...'
+            placeholder='grep projects...'
             value={query}
             onChange={e => setQuery(e.target.value)}
             className='pr-10' // Add padding for the reset button
@@ -62,31 +55,13 @@ export default function ProjectsWithFilter({
         </div>
       </div>
 
-      <Tabs defaultValue='all' value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className='grid w-full grid-cols-3'>
-          <TabsTrigger value='all'>
-            <LayoutGrid className='h-4 w-4' />
-            <span className='sr-only'>All</span>
-          </TabsTrigger>
-          <TabsTrigger value='personal'>
-            <User className='h-4 w-4' />
-            <span className='sr-only'>Personal</span>
-          </TabsTrigger>
-          <TabsTrigger value='contributions'>
-            <Users className='h-4 w-4' />
-            <span className='sr-only'>Contributions</span>
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value='all'>
-          <Projects projects={categorizedProjects.all} />
-        </TabsContent>
-        <TabsContent value='personal'>
-          <Projects projects={categorizedProjects.personal} />
-        </TabsContent>
-        <TabsContent value='contributions'>
-          <Projects projects={categorizedProjects.contributions} />
-        </TabsContent>
-      </Tabs>
+      {filteredProjects.length > 0 ? (
+        <Projects projects={filteredProjects} />
+      ) : (
+        <p className='text-sm text-muted-foreground'>
+          grep: no matches found
+        </p>
+      )}
     </div>
   )
 }
