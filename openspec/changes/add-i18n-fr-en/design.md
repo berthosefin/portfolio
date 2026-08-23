@@ -44,9 +44,9 @@ Static Next.js 14 App Router site (no backend, no middleware, no runtime functio
 
 `data/projects/*.mdx` moves to `data/projects/en/`; `data/projects/fr/` starts as copies with frontmatter `summary` translated (title/tags/role/dates/URLs untouched) and body copied verbatim from EN with a `<!-- TODO(i18n v2): translate body -->` marker. `lib/projects.ts`: `rootDirectory(lang)`, signatures become `getProjects(limit?, lang: Locale = 'en')` and `getProjectBySlug(slug, lang: Locale = 'en')`. FR `[slug]` pages call `generateStaticParams` over the fr directory.
 
-### D6 — Switcher as a client island in the StatusBar
+### D6 — Switcher as a client island in the Header
 
-New `components/locale-switcher.tsx` ('use client', `usePathname()`): computes the twin href by stripping a leading `/fr` (→ EN target) or prepending `/fr` (→ FR target); renders a muted link labeled with the other locale's code (`FR` / `EN`) that brightens on hover, placed in the StatusBar right cluster next to the social icons. Keeping it client-side avoids threading `pathname` through server layouts.
+New `components/locale-switcher.tsx` ('use client', `usePathname()`): computes the twin href by stripping a leading `/fr` (→ EN target) or prepending `/fr` (→ FR target); renders a link labeled with the other locale's code (`FR` / `EN`) that brightens on hover, placed in the Header control cluster next to the theme toggle (updated from an initial status-bar placement — header is the conventional, discoverable spot for locale switching). Keeping it client-side avoids threading `pathname` through server layouts.
 
 ### D7 — SEO signals
 

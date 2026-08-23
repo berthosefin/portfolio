@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "accueil",
+    "skills": "compétences",
+    "projects": "projets",
+    "contact": "contact"
+  },
+  "home": {
+    "role": "— développeur autodidacte",
+    "about": [
+      "Développeur autodidacte. Passionné de Linux. Bâtisseur open source.",
+      "Je vis dans le terminal — ricing Hyprland, scripts Bash et publication de crates Rust.",
+      "Mon parcours en comptabilité et gestion de paie m'aide à concevoir des logiciels qui comprennent le métier derrière le code."
+    ],
+    "openSource": {
+      "dots": "config hyprland, theming matugen",
+      "randanarana": "CLI Rust, publié sur crates.io"
+    },
+    "readyForInput": "Prêt pour une commande"
+  },
+  "projects": {
+    "heading": "Projets",
+    "filterPlaceholder": "grep projets...",
+    "resetFilter": "Réinitialiser le filtre",
+    "noMatches": "grep : aucun projet trouvé",
+    "personalProject": "projet personnel",
+    "contributions": "contributions"
+  },
+  "skills": {
+    "heading": "Compétences",
+    "filterPlaceholder": "filtrer les compétences...",
+    "resetFilter": "Réinitialiser le filtre",
+    "footnote": "* outils complémentaires — tout le reste est livré dans de vrais projets.",
+    "summary": {
+      "directoryOne": "répertoire",
+      "directoryMany": "répertoires",
+      "skillOne": "compétence",
+      "skillMany": "compétences"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "channels": {
+      "email": "courriel",
+      "linkedin": "linkedin",
+      "whatsapp": "whatsapp"
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable"
+  },
+  "footer": {
+    "tagline": "développeur autodidacte"
+  },
+  "meta": {
+    "home": {
+      "title": "Berthose Fin | Développeur autodidacte",
+      "description": "Découvrez le portfolio de Berthose Fin, développeur autodidacte passionné d'open source et de Linux. Il aime créer des applications, expérimenter avec Linux et personnaliser son système."
+    },
+    "projects": {
+      "title": "Projets | Berthose Fin",
+      "description": "Applications de gestion, outils en ligne de commande et projets open source créés par Berthose Fin."
+    },
+    "skills": {
+      "title": "Compétences | Berthose Fin",
+      "description": "Le catalogue complet des compétences de Berthose Fin : langages de programmation, technologies frontend et backend, bases de données et outils DevOps."
+    },
+    "contact": {
+      "title": "Contact | Berthose Fin",
+      "description": "Contactez Berthose Fin par e-mail, LinkedIn ou WhatsApp."
+    },
+    "notFound": {
+      "title": "Page introuvable | Berthose Fin",
+      "description": "Cette page n'existe pas."
+    }
+  }
+}

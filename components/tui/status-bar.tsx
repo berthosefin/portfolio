@@ -28,14 +28,13 @@ const links = [
   }
 ]
 
-export default function StatusBar() {
+export default function StatusBar({ tagline }: { tagline: string }) {
   return (
     <footer className='border-t border-border bg-card'>
       <div className='container flex max-w-4xl flex-col items-center justify-between gap-3 py-4 text-xs text-muted-foreground sm:flex-row'>
         <p>
           <span className='select-none text-brand'>[0] </span>
-          <span className='text-foreground'>berthose fin</span> — self-taught
-          developer
+          <span className='text-foreground'>berthose fin</span> — {tagline}
         </p>
         <div className='flex items-center gap-5'>
           {links.map(item => (

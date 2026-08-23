@@ -1,10 +1,11 @@
 import Header from '@/components/header'
 import { ThemeProvider } from '@/components/providers'
 import StatusBar from '@/components/tui/status-bar'
+import { getDictionary, type Locale } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import './globals.css'
+import type { ReactNode } from 'react'
+import '../app/globals.css'
 
 const jetbrainsMono = localFont({
   src: '../public/fonts/JetBrainsMono-Variable-latin.woff2',
@@ -13,19 +14,17 @@ const jetbrainsMono = localFont({
   display: 'swap'
 })
 
-export const metadata: Metadata = {
-  title: 'Berthose Fin | Self-taught Developer',
-  description:
-    'Discover the portfolio of Berthose Fin, a self-taught developer passionate about open source and Linux. He enjoys creating applications, experimenting with Linux, and customizing his system.'
-}
-
-export default function RootLayout({
+export default function RootShell({
+  locale,
   children
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  locale: Locale
+  children: ReactNode
+}) {
+  const dict = getDictionary(locale)
+
   return (
-    <html lang='en'>
+    <html lang={locale}>
       <body
         className={cn(
           'flex min-h-screen flex-col antialiased noise',
@@ -33,9 +32,9 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider>
-          <Header />
+          <Header locale={locale} labels={dict.header} />
           <main className='grow'>{children}</main>
-          <StatusBar />
+          <StatusBar tagline={dict.footer.tagline} />
         </ThemeProvider>
       </body>
     </html>

@@ -5,28 +5,41 @@ import PromptLine from '@/components/tui/prompt-line'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import skillsData from '@/data/skills.json'
+import { getDictionary, type Locale } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { X } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import { slugify } from '@/lib/slugify'
 
 type Branch = {
   dir: string
   leaves: { name: string; featured: boolean }[]
+  brand: boolean
 }
 
-const toDirName = (name: string) =>
-  name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
+const allBranches: Record<Locale, Branch[]> = {
+  en: [],
+  fr: []
+}
 
-const allBranches: Branch[] = skillsData.categories.map(category => ({
-  dir: toDirName(category.name),
-  leaves: category.skills.map(skill => ({
-    name: skill.name,
-    featured: skill.featured
-  }))
-}))
+for (const category of skillsData.categories) {
+  for (const lang of ['en', 'fr'] as Locale[]) {
+    const isFr = lang === 'fr'
+    const categoryName = isFr ? (category.nameFr ?? category.name) : category.name
+    const isBrandCategory = category.name === 'Business Domain'
+    allBranches[lang].push({
+      dir: slugify(categoryName),
+      leaves: category.skills.map(skill => ({
+        name:
+          isFr && isBrandCategory && 'nameFr' in skill
+            ? (skill.nameFr ?? skill.name)
+            : skill.name,
+        featured: skill.featured
+      })),
+      brand: isBrandCategory
+    })
+  }
+}
 
 type Row = {
   key: string
@@ -39,15 +52,16 @@ type Row = {
   hiddenCount?: number
 }
 
-export default function Skills() {
+export default function Skills({ lang = 'en' }: { lang?: Locale }) {
+  const dict = getDictionary(lang)
   const [query, setQuery] = useState('')
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set())
 
   const q = query.trim().toLowerCase()
 
   const branches = useMemo(() => {
-    if (!q) return allBranches
-    return allBranches
+    if (!q) return allBranches[lang]
+    return allBranches[lang]
       .map(branch => ({
         ...branch,
         leaves: branch.leaves.filter(leaf =>
@@ -55,7 +69,7 @@ export default function Skills() {
         )
       }))
       .filter(branch => branch.leaves.length > 0)
-  }, [q])
+  }, [q, lang])
 
   const toggleBranch = (dir: string) => {
     setCollapsed(prev => {
@@ -74,7 +88,7 @@ export default function Skills() {
   branches.forEach((branch, bi) => {
     const isLastBranch = bi === branches.length - 1
     const childPipe = isLastBranch ? '    ' : '│   '
-    const brand = branch.dir === 'business-domain'
+    const brand = branch.brand
     const isCollapsed = !q && collapsed.has(branch.dir)
     rows.push({
       key: `dir-${branch.dir}`,
@@ -115,7 +129,7 @@ export default function Skills() {
         <div className='relative flex-grow'>
           <Input
             type='text'
-            placeholder='filter skills...'
+            placeholder={dict.skills.filterPlaceholder}
             value={query}
             onChange={e => setQuery(e.target.value)}
             className='pr-10'
@@ -128,7 +142,7 @@ export default function Skills() {
               onClick={() => setQuery('')}
             >
               <X className='h-4 w-4' />
-              <span className='sr-only'>Reset filter</span>
+              <span className='sr-only'>{dict.skills.resetFilter}</span>
             </Button>
           )}
         </div>
@@ -179,15 +193,27 @@ export default function Skills() {
           ))}
 
           <p className='mt-3 text-muted-foreground'>
-            {visibleBranches} director{visibleBranches === 1 ? 'y' : 'ies'},{' '}
-            {visibleSkills} skill{visibleSkills === 1 ? '' : 's'}
+            {visibleBranchsLabel(visibleBranches, dict)},{' '}
+            {visibleSkillsLabel(visibleSkills, dict)}
           </p>
         </div>
       </Pane>
 
-      <p className='mt-4 text-xs text-muted-foreground'>
-        * supporting tools — everything else ships in real projects.
-      </p>
+      <p className='mt-4 text-xs text-muted-foreground'>{dict.skills.footnote}</p>
     </div>
   )
+}
+
+function visibleBranchsLabel(count: number, dict: ReturnType<typeof getDictionary>) {
+  const word =
+    count === 1
+      ? dict.skills.summary.directoryOne
+      : dict.skills.summary.directoryMany
+  return `${count} ${word}`
+}
+
+function visibleSkillsLabel(count: number, dict: ReturnType<typeof getDictionary>) {
+  const word =
+    count === 1 ? dict.skills.summary.skillOne : dict.skills.summary.skillMany
+  return `${count} ${word}`
 }

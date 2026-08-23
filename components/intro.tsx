@@ -1,10 +1,13 @@
 import authorImage from '@/public/images/thos.jpg'
+import { getDictionary, type Locale } from '@/lib/i18n'
 import Image from 'next/image'
 import Link from 'next/link'
 import Pane from '@/components/tui/pane'
 import PromptLine from '@/components/tui/prompt-line'
 
-export default function Intro() {
+export default function Intro({ lang = 'en' }: { lang?: Locale }) {
+  const dict = getDictionary(lang)
+
   return (
     <section className='flex flex-col-reverse gap-x-10 gap-y-6 pb-16 pt-6 md:flex-row md:items-start animate-fade-in-up'>
       <div className='flex-1'>
@@ -13,21 +16,15 @@ export default function Intro() {
           Berthose Fin{' '}
           <span className='font-normal text-muted-foreground'>(Thos)</span>
           <span className='ml-2 align-middle text-xs font-normal text-muted-foreground'>
-            — self-taught developer
+            {dict.home.role}
           </span>
         </h1>
 
         <div className='mt-8'>
           <PromptLine command='cat about.txt'>
-            <p>
-              Self-taught developer. Linux enthusiast. Open source builder.
-            </p>
-            <p className='mt-3'>
-              I live in the terminal — ricing Hyprland, scripting Bash, and shipping Rust crates.
-            </p>
-            <p className='mt-3'>
-              My accounting and payroll background helps me build software that understands the business behind the code.
-            </p>
+            <p>{dict.home.about[0]}</p>
+            <p className='mt-3'>{dict.home.about[1]}</p>
+            <p className='mt-3'>{dict.home.about[2]}</p>
           </PromptLine>
         </div>
 
@@ -43,7 +40,7 @@ export default function Intro() {
                 >
                   dots/
                 </Link>{' '}
-                <span>hyprland config, matugen theming</span>
+                <span>{dict.home.openSource.dots}</span>
               </li>
               <li>
                 <Link
@@ -54,7 +51,7 @@ export default function Intro() {
                 >
                   randanarana/
                 </Link>{' '}
-                <span>Rust CLI, published on crates.io</span>
+                <span>{dict.home.openSource.randanarana}</span>
               </li>
             </ul>
           </PromptLine>
@@ -62,7 +59,7 @@ export default function Intro() {
 
         <div className='mt-8 hidden md:block'>
           <PromptLine command='_'>
-            <span className='sr-only'>Ready for input</span>
+            <span className='sr-only'>{dict.home.readyForInput}</span>
           </PromptLine>
         </div>
       </div>

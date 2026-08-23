@@ -73,7 +73,7 @@ Project entries SHALL exist per locale under parallel directories (`data/project
 
 ### Requirement: Language switcher parity
 
-Every page SHALL link to its twin page in the other locale, placed in the status bar and preserving the current route. The switcher SHALL always target the other locale of the exact current URL.
+Every page SHALL link to its twin page in the other locale, placed in the header next to the theme toggle and preserving the current route. The switcher SHALL always target the other locale of the exact current URL.
 
 #### Scenario: Twin navigation from a deep page
 

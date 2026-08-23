@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "home",
+    "skills": "skills",
+    "projects": "projects",
+    "contact": "contact"
+  },
+  "home": {
+    "role": "— self-taught developer",
+    "about": [
+      "Self-taught developer. Linux enthusiast. Open source builder.",
+      "I live in the terminal — ricing Hyprland, scripting Bash, and shipping Rust crates.",
+      "My accounting and payroll background helps me build software that understands the business behind the code."
+    ],
+    "openSource": {
+      "dots": "hyprland config, matugen theming",
+      "randanarana": "Rust CLI, published on crates.io"
+    },
+    "readyForInput": "Ready for input"
+  },
+  "projects": {
+    "heading": "Projects",
+    "filterPlaceholder": "grep projects...",
+    "resetFilter": "Reset filter",
+    "noMatches": "grep: no matches found",
+    "personalProject": "personal project",
+    "contributions": "contributions"
+  },
+  "skills": {
+    "heading": "Skills",
+    "filterPlaceholder": "filter skills...",
+    "resetFilter": "Reset filter",
+    "footnote": "* supporting tools — everything else ships in real projects.",
+    "summary": {
+      "directoryOne": "directory",
+      "directoryMany": "directories",
+      "skillOne": "skill",
+      "skillMany": "skills"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "channels": {
+      "email": "email",
+      "linkedin": "linkedin",
+      "whatsapp": "whatsapp"
+    }
+  },
+  "notFound": {
+    "title": "Page not found"
+  },
+  "footer": {
+    "tagline": "self-taught developer"
+  },
+  "meta": {
+    "home": {
+      "title": "Berthose Fin | Self-taught Developer",
+      "description": "Discover the portfolio of Berthose Fin, a self-taught developer passionate about open source and Linux. He enjoys creating applications, experimenting with Linux, and customizing his system."
+    },
+    "projects": {
+      "title": "Projects | Berthose Fin",
+      "description": "Business management applications, CLI tools, and open-source projects built by Berthose Fin."
+    },
+    "skills": {
+      "title": "Skills | Berthose Fin",
+      "description": "The complete skill catalog of Berthose Fin: programming languages, frontend and backend technologies, databases, and DevOps tools."
+    },
+    "contact": {
+      "title": "Contact | Berthose Fin",
+      "description": "Reach Berthose Fin by email, LinkedIn, or WhatsApp."
+    },
+    "notFound": {
+      "title": "Page not found | Berthose Fin",
+      "description": "This page does not exist."
+    }
+  }
+}

@@ -8,9 +8,11 @@ import { useMemo, useState } from 'react'
 import Projects from './projects'
 
 export default function ProjectsWithFilter({
-  projects
+  projects,
+  strings
 }: {
   projects: ProjectMetadata[]
+  strings: { filterPlaceholder: string; resetFilter: string; noMatches: string }
 }) {
   const [query, setQuery] = useState('')
 
@@ -36,7 +38,7 @@ export default function ProjectsWithFilter({
         <div className='relative flex-grow'>
           <Input
             type='text'
-            placeholder='grep projects...'
+            placeholder={strings.filterPlaceholder}
             value={query}
             onChange={e => setQuery(e.target.value)}
             className='pr-10' // Add padding for the reset button
@@ -49,7 +51,7 @@ export default function ProjectsWithFilter({
               onClick={resetFilter}
             >
               <X className='h-4 w-4' />
-              <span className='sr-only'>Reset filter</span>
+              <span className='sr-only'>{strings.resetFilter}</span>
             </Button>
           )}
         </div>
@@ -58,9 +60,7 @@ export default function ProjectsWithFilter({
       {filteredProjects.length > 0 ? (
         <Projects projects={filteredProjects} />
       ) : (
-        <p className='text-sm text-muted-foreground'>
-          grep: no matches found
-        </p>
+        <p className='text-sm text-muted-foreground'>{strings.noMatches}</p>
       )}
     </div>
   )

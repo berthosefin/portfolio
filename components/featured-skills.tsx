@@ -1,9 +1,10 @@
+import { localePrefix, type Locale } from '@/lib/i18n'
 import Link from 'next/link'
 import Pane from '@/components/tui/pane'
 import PromptLine from '@/components/tui/prompt-line'
 import skillsData from '@/data/skills.json'
 
-export default function FeaturedSkills() {
+export default function FeaturedSkills({ lang = 'en' }: { lang?: Locale }) {
   const featuredSkills = skillsData.categories.flatMap(category =>
     category.skills.filter(skill => skill.featured)
   )
@@ -25,7 +26,7 @@ export default function FeaturedSkills() {
       </Pane>
         <div className='mt-3 text-right'>
           <Link
-            href='/skills'
+            href={`${localePrefix[lang]}/skills`}
             className='text-sm text-muted-foreground transition-colors hover:text-brand'
           >
             <span className='select-none text-emerald-600 dark:text-emerald-400'>

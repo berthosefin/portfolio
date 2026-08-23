@@ -3,60 +3,154 @@
     {
       "name": "Business Domain",
       "skills": [
-        { "name": "Accounting", "featured": true },
-        { "name": "Payroll Management", "featured": true },
-        { "name": "VAT Management", "featured": false },
-        { "name": "Commercial Management", "featured": false }
-      ]
+        {
+          "name": "Accounting",
+          "featured": true,
+          "nameFr": "Comptabilité"
+        },
+        {
+          "name": "Payroll Management",
+          "featured": true,
+          "nameFr": "Gestion de paie"
+        },
+        {
+          "name": "VAT Management",
+          "featured": false,
+          "nameFr": "Gestion TVA"
+        },
+        {
+          "name": "Commercial Management",
+          "featured": false,
+          "nameFr": "Gestion commerciale"
+        }
+      ],
+      "nameFr": "Domaine métier"
     },
     {
       "name": "Programming Languages",
       "skills": [
-        { "name": "TypeScript", "featured": true },
-        { "name": "JavaScript", "featured": true },
-        { "name": "Rust", "featured": true }
-      ]
+        {
+          "name": "TypeScript",
+          "featured": true
+        },
+        {
+          "name": "JavaScript",
+          "featured": true
+        },
+        {
+          "name": "Rust",
+          "featured": true
+        }
+      ],
+      "nameFr": "Langages de programmation"
     },
     {
       "name": "Frontend",
       "skills": [
-        { "name": "React", "featured": true },
-        { "name": "Next.js", "featured": true },
-        { "name": "TanStack Start", "featured": true },
-        { "name": "TanStack Query", "featured": true },
-        { "name": "shadcn/ui", "featured": true },
-        { "name": "Tailwind CSS", "featured": true },
-        { "name": "Zustand", "featured": true },
-        { "name": "Zod", "featured": false },
-        { "name": "Recharts", "featured": true }
-      ]
+        {
+          "name": "React",
+          "featured": true
+        },
+        {
+          "name": "Next.js",
+          "featured": true
+        },
+        {
+          "name": "TanStack Start",
+          "featured": true
+        },
+        {
+          "name": "TanStack Query",
+          "featured": true
+        },
+        {
+          "name": "shadcn/ui",
+          "featured": true
+        },
+        {
+          "name": "Tailwind CSS",
+          "featured": true
+        },
+        {
+          "name": "Zustand",
+          "featured": true
+        },
+        {
+          "name": "Zod",
+          "featured": false
+        },
+        {
+          "name": "Recharts",
+          "featured": true
+        }
+      ],
+      "nameFr": "Frontend"
     },
     {
       "name": "Backend",
       "skills": [
-        { "name": "Node.js", "featured": false },
-        { "name": "NestJS", "featured": true },
-        { "name": "Better Auth", "featured": false }
-      ]
+        {
+          "name": "Node.js",
+          "featured": false
+        },
+        {
+          "name": "NestJS",
+          "featured": true
+        },
+        {
+          "name": "Better Auth",
+          "featured": false
+        }
+      ],
+      "nameFr": "Backend"
     },
     {
       "name": "Databases",
       "skills": [
-        { "name": "PostgreSQL", "featured": true },
-        { "name": "Prisma", "featured": true }
-      ]
+        {
+          "name": "PostgreSQL",
+          "featured": true
+        },
+        {
+          "name": "Prisma",
+          "featured": true
+        }
+      ],
+      "nameFr": "Bases de données"
     },
     {
       "name": "DevOps & Tools",
       "skills": [
-        { "name": "Git", "featured": true },
-        { "name": "CI/CD", "featured": true },
-        { "name": "Docker", "featured": true },
-        { "name": "Linux", "featured": true },
-        { "name": "Bash", "featured": true },
-        { "name": "Vim", "featured": true },
-        { "name": "Cargo", "featured": true }
-      ]
+        {
+          "name": "Git",
+          "featured": true
+        },
+        {
+          "name": "CI/CD",
+          "featured": true
+        },
+        {
+          "name": "Docker",
+          "featured": true
+        },
+        {
+          "name": "Linux",
+          "featured": true
+        },
+        {
+          "name": "Bash",
+          "featured": true
+        },
+        {
+          "name": "Vim",
+          "featured": true
+        },
+        {
+          "name": "Cargo",
+          "featured": true
+        }
+      ],
+      "nameFr": "DevOps & Outils"
     }
   ]
 }

@@ -2,26 +2,24 @@ import GithubIcon from '@/components/github-icon'
 import MDXContent from '@/components/mdx-content'
 import Pane from '@/components/tui/pane'
 import PromptLine from '@/components/tui/prompt-line'
-import { Globe } from 'lucide-react'
-import { getProjectBySlug, getProjects } from '@/lib/projects'
+import { getDictionary, localePrefix, type Locale } from '@/lib/i18n'
+import { getProjectBySlug } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
+import { Globe } from 'lucide-react'
 import { ArrowLeftIcon } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export async function generateStaticParams() {
-  const projects = await getProjects()
-  const slugs = projects.map(project => ({ slug: project.slug }))
-  return slugs
-}
-
-export default async function Project({
-  params
+export default async function ProjectDetail({
+  slug,
+  lang = 'en'
 }: {
-  params: { slug: string }
+  slug: string
+  lang?: Locale
 }) {
-  const { slug } = params
-  const project = await getProjectBySlug(slug)
+  const dict = getDictionary(lang)
+  const prefix = localePrefix[lang]
+  const project = await getProjectBySlug(slug, lang)
 
   if (!project) {
     notFound()
@@ -34,7 +32,7 @@ export default async function Project({
     <section className='pb-24 pt-28'>
       <div className='container max-w-3xl'>
         <Link
-          href='/projects'
+          href={`${prefix}/projects`}
           className='inline-block text-sm text-muted-foreground transition-colors hover:text-brand'
         >
           <span className='select-none text-emerald-600 dark:text-emerald-400'>
@@ -49,8 +47,10 @@ export default async function Project({
 
         <Pane label={title} className='mt-4'>
           <p className='text-xs uppercase tracking-wider text-muted-foreground'>
-            {role === 'Author' ? 'personal project' : 'contributions'} ·{' '}
-            {formatDate(publishedAt ?? '')}
+            {role === 'Author'
+              ? dict.projects.personalProject
+              : dict.projects.contributions}{' '}
+            · {formatDate(publishedAt ?? '')}
           </p>
 
           {(projectUrl || liveUrl) && (
