@@ -1,5 +1,4 @@
 import Skills from '@/components/skills'
-import PromptLine from '@/components/tui/prompt-line'
 
 export default function SkillsPage() {
   return (

@@ -1,71 +1,109 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
 import Pane from '@/components/tui/pane'
 import PromptLine from '@/components/tui/prompt-line'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import {
-  Code2,
-  Monitor,
-  Server,
-  Database,
-  Terminal,
-  Briefcase,
-  X
-} from 'lucide-react'
+import { Input } from '@/components/ui/input'
 import skillsData from '@/data/skills.json'
+import { X } from 'lucide-react'
+import { useMemo, useState } from 'react'
 
-const categoryIcons: Record<string, React.ReactNode> = {
-  'Business Domain': <Briefcase className='h-3.5 w-3.5' />,
-  'Programming Languages': <Code2 className='h-3.5 w-3.5' />,
-  Frontend: <Monitor className='h-3.5 w-3.5' />,
-  Backend: <Server className='h-3.5 w-3.5' />,
-  Databases: <Database className='h-3.5 w-3.5' />,
-  'DevOps & Tools': <Terminal className='h-3.5 w-3.5' />
+type Branch = {
+  dir: string
+  leaves: { name: string; featured: boolean }[]
+}
+
+const toDirName = (name: string) =>
+  name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+
+const allBranches: Branch[] = skillsData.categories.map(category => ({
+  dir: toDirName(category.name),
+  leaves: category.skills.map(skill => ({
+    name: skill.name,
+    featured: skill.featured
+  }))
+}))
+
+type Row = {
+  key: string
+  connector: string
+  kind: 'dir' | 'leaf'
+  name: string
+  brand: boolean
+  featured?: boolean
 }
 
 export default function Skills() {
-  const [categories, setCategories] = useState(skillsData.categories)
-  const [filter, setFilter] = useState('')
+  const [query, setQuery] = useState('')
 
-  useEffect(() => {
-    const filteredCategories = skillsData.categories
-      .map(category => ({
-        ...category,
-        skills: category.skills.filter(skill =>
-          skill.name.toLowerCase().includes(filter.toLowerCase())
+  const q = query.trim().toLowerCase()
+
+  const branches = useMemo(() => {
+    if (!q) return allBranches
+    return allBranches
+      .map(branch => ({
+        ...branch,
+        leaves: branch.leaves.filter(leaf =>
+          leaf.name.toLowerCase().includes(q)
         )
       }))
-      .filter(category => category.skills.length > 0)
+      .filter(branch => branch.leaves.length > 0)
+  }, [q])
 
-    setCategories(filteredCategories)
-  }, [filter])
+  const totalSkills = branches.reduce((acc, b) => acc + b.leaves.length, 0)
+  const isFiltered = query.length > 0
 
-  const handleReset = () => {
-    setFilter('')
-    setCategories(skillsData.categories)
-  }
+  const rows: Row[] = []
+  branches.forEach((branch, bi) => {
+    const isLastBranch = bi === branches.length - 1
+    const childPipe = isLastBranch ? '    ' : '│   '
+    const brand = branch.dir === 'business-domain'
+    rows.push({
+      key: `dir-${branch.dir}`,
+      connector: isLastBranch ? '└── ' : '├── ',
+      kind: 'dir',
+      name: `${branch.dir}/`,
+      brand
+    })
+    branch.leaves.forEach((leaf, li) => {
+      rows.push({
+        key: `leaf-${bi}-${li}`,
+        connector: `${childPipe}${li === branch.leaves.length - 1 ? '└── ' : '├── '}`,
+        kind: 'leaf',
+        name: leaf.featured ? leaf.name : `${leaf.name} *`,
+        brand,
+        featured: leaf.featured
+      })
+    })
+  })
 
   return (
-    <section className='py-8'>
-      <PromptLine command='tree ~/skills' className='mb-4' />
+    <div>
+      <PromptLine
+        command={
+          q ? `tree ~/skills -P "*${query.trim()}*"` : 'tree ~/skills'
+        }
+        className='mb-6'
+      />
 
       <div className='mb-6 flex items-center gap-2'>
         <div className='relative flex-grow'>
           <Input
             type='text'
-            placeholder='grep skills...'
-            value={filter}
-            onChange={e => setFilter(e.target.value)}
+            placeholder='filter skills...'
+            value={query}
+            onChange={e => setQuery(e.target.value)}
             className='pr-10'
           />
-          {filter && (
+          {isFiltered && (
             <Button
               variant='ghost'
               size='icon'
               className='absolute right-2 top-1/2 -translate-y-1/2'
-              onClick={handleReset}
+              onClick={() => setQuery('')}
             >
               <X className='h-4 w-4' />
               <span className='sr-only'>Reset filter</span>
@@ -74,42 +112,45 @@ export default function Skills() {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
-        {categories.map(category => {
-          const isBusiness = category.name === 'Business Domain'
-          return (
-            <Pane
-              key={category.name}
-              label={category.name.toLowerCase()}
-              className={
-                isBusiness ? 'border-brand/40 bg-brand/[0.04]' : undefined
-              }
-            >
-              <div className={'flex flex-wrap gap-2'}>
-                {category.skills.map(skill => (
-                  <span
-                    key={skill.name}
-                    className={`border px-2 py-1 text-xs transition-colors ${
-                      skill.featured
-                        ? isBusiness
-                          ? 'border-brand/50 bg-brand/10 text-brand'
-                          : 'border-border text-foreground hover:border-brand/50 hover:text-brand'
-                        : 'border-border/60 text-muted-foreground'
-                    }`}
-                  >
-                    {skill.name}
-                    {!skill.featured && <span className='opacity-60'> *</span>}
-                  </span>
-                ))}
-              </div>
-            </Pane>
-          )
-        })}
-      </div>
+      <Pane label='~/skills' contentClassName='overflow-x-auto p-4'>
+        <div className='whitespace-nowrap text-sm leading-[1.8]'>
+          <p className='font-medium text-foreground'>~/skills</p>
 
-      <p className='mt-6 text-xs text-muted-foreground'>
+          {rows.map(row => (
+            <p key={row.key}>
+              <span
+                className={`select-none ${
+                  row.brand ? 'text-brand/40' : 'text-muted-foreground'
+                }`}
+              >
+                {row.connector}
+              </span>
+              <span
+                className={
+                  row.kind === 'dir'
+                    ? row.brand
+                      ? 'font-medium text-brand'
+                      : 'font-medium text-foreground'
+                    : row.featured
+                      ? 'text-foreground'
+                      : 'text-muted-foreground'
+                }
+              >
+                {row.name}
+              </span>
+            </p>
+          ))}
+
+          <p className='mt-3 text-muted-foreground'>
+            {branches.length} director{branches.length === 1 ? 'y' : 'ies'},{' '}
+            {totalSkills} skill{totalSkills === 1 ? '' : 's'}
+          </p>
+        </div>
+      </Pane>
+
+      <p className='mt-4 text-xs text-muted-foreground'>
         * supporting tools — everything else ships in real projects.
       </p>
-    </section>
+    </div>
   )
 }
