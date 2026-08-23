@@ -179,3 +179,17 @@ Markdown tables inside project bodies SHALL render with the terminal design syst
 
 - **WHEN** the dots project detail page renders its Keybindings Overview table
 - **THEN** columns align within bordered cells, the header row is distinguishable, and section rows read as bold entries rather than broken layout
+
+### Requirement: Theme-aware code highlighting
+
+Syntax-highlighted code blocks in MDX content SHALL define sugar-high token colors for both themes via the `--sh-*` custom properties, so every token type remains legible on both the light paper background and the dark terminal background. No code block content SHALL become invisible or unreadable in either theme.
+
+#### Scenario: Install commands readable in light mode
+
+- **WHEN** a visitor reads a project page containing fenced shell blocks in light mode
+- **THEN** every token of the block is visibly rendered against the light background
+
+#### Scenario: Tokens follow the active theme
+
+- **WHEN** the visitor toggles between dark and light modes
+- **THEN** token colors switch between the dark and light palettes without losing legibility

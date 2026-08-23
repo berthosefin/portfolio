@@ -9,5 +9,5 @@
 ## 2. Validation
 
 - [x] 2.1 `npm run lint && npx tsc --noEmit && npm run build`
-- [ ] 2.2 Eyeball `/projects/dots` in both themes: install command fully readable, strings/keywords/comments visibly distinct
-- [ ] 2.3 `openspec validate syntax-highlight-theme --strict`
+- [x] 2.2 Eyeball `/projects/dots` in both themes: install command fully readable, strings/keywords/comments visibly distinct
+- [x] 2.3 `openspec validate syntax-highlight-theme --strict`
