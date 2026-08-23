@@ -4,7 +4,8 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL)
+  metadataBase: new URL(SITE_URL),
+  title: 'Berthose Fin'
 }
 
 export default function FrLayout({ children }: { children: ReactNode }) {

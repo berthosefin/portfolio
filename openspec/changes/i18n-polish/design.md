@@ -45,6 +45,7 @@ components/not-found-page.tsx ← shared presentational component
 - Each group file exports `metadata` from its locale dictionary (`dict.notFound.title` — namespace already exists in both dictionaries) and renders the component with that dictionary's strings. French copy: « Page introuvable », hint « Le chemin demandé n'existe pas ou a été déplacé. », CTA « revenir à l'accueil »; English mirrors current content.
 - Why not one root `not-found.tsx`: with multiple root layouts Next cannot use a root-level boundary across groups; per-group files are the supported pattern. The `(fr)` file must live at `app/(fr)/fr/not-found.tsx` so it scopes to the `/fr/*` subtree.
 - Metadata export kills the default « 404: This page could not be found. » title in both groups.
+- Title robustness (post-feedback hardening): metadata on `not-found.tsx` alone is not guaranteed across render paths (client-side navigation RSC payloads, dev quirks). Three layers: `title.default: 'Berthose Fin'` in both group layouts (never show raw URL), `generateMetadata` on the catch-all pages (real routes → title always in payload), and `[slug]` generateMetadata returning localized notFound title when the project is missing. The shell error line is chrome and stays identical in both locales (`zsh: no such file or directory: …`); only the prose below localizes.
 - Unknown slugs under `/en`-side dynamic routes already bubble to `(en)`'s boundary; nothing else changes there.
 
 ## Risks / Trade-offs

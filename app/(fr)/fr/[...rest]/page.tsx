@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import dictionary from '@/dictionaries/en.json'
+import dictionary from '@/dictionaries/fr.json'
 
 export function generateMetadata(): Metadata {
   return {

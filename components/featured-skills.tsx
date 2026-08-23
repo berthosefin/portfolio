@@ -5,21 +5,31 @@ import PromptLine from '@/components/tui/prompt-line'
 import skillsData from '@/data/skills.json'
 
 export default function FeaturedSkills({ lang = 'en' }: { lang?: Locale }) {
-  const featuredSkills = skillsData.categories.flatMap(category =>
-    category.skills.filter(skill => skill.featured)
-  )
+  const isFr = lang === 'fr'
+  const featuredSkills: string[] = []
+  for (const category of skillsData.categories) {
+    const isBrandCategory = category.name === 'Business Domain'
+    for (const skill of category.skills) {
+      if (!skill.featured) continue
+      featuredSkills.push(
+        isFr && isBrandCategory && 'nameFr' in skill
+          ? (skill.nameFr ?? skill.name)
+          : skill.name
+      )
+    }
+  }
 
   return (
     <section className='py-12'>
       <PromptLine command='grep -i "featured" ~/skills.json' className='mb-4' />
       <Pane label='~/skills --featured'>
         <div className='flex flex-wrap gap-2'>
-          {featuredSkills.map(skill => (
+          {featuredSkills.map(name => (
             <span
-              key={skill.name}
+              key={name}
               className='border border-border px-2 py-1 text-xs text-secondary-foreground transition-colors hover:border-brand/50 hover:text-brand'
             >
-              {skill.name}
+              {name}
             </span>
           ))}
         </div>

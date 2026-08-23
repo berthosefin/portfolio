@@ -14,7 +14,7 @@ export default function LocaleSwitcher() {
       className='font-medium transition-colors hover:text-brand'
       aria-label={isFr ? 'Switch to English' : 'Passer en français'}
     >
-      {isFr ? 'EN' : 'FR'}
+      {isFr ? 'en' : 'fr'}
     </Link>
   )
 }

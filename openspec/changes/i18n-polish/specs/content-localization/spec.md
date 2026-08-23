@@ -25,7 +25,7 @@ The skill catalog data SHALL carry both an English and a French name for every c
 
 ### Requirement: Localized not-found boundaries
 
-Every locale route group SHALL provide a styled not-found boundary so any unmatched path or unknown dynamic segment within that group renders the site's terminal-styled 404 page rather than a framework-default error. The 404 copy and `<title>` SHALL match the group's locale (French under `/fr`, English elsewhere), and the page SHALL offer navigation back to that locale's home.
+Every locale route group SHALL provide a styled not-found boundary so any unmatched path or unknown dynamic segment within that group renders the site's terminal-styled 404 page rather than a framework-default error. The 404 copy, `<title>`, and metadata SHALL match the group's locale (French under `/fr`, English elsewhere), except simulated shell chrome which follows the terminal-chrome rule above; the browser tab SHALL always show a localized title, never the raw URL. The page SHALL offer navigation back to that locale's home.
 
 #### Scenario: Unknown project slug under French prefix
 

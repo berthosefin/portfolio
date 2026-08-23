@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import NotFoundPage from '@/components/not-found-page'
-import dictionary from '@/dictionaries/en.json'
+import dictionary from '@/dictionaries/fr.json'
 
 export const metadata: Metadata = {
   title: dictionary.meta.notFound.title,
@@ -11,9 +11,9 @@ export default function NotFound() {
   return (
     <NotFoundPage
       errorLine='no such file or directory: /this-page-does-not-exist'
-      message='The page you are looking for was moved, removed, renamed — or never existed.'
-      ctaHref='/'
-      ctaLabel='cd ~/ → back home'
+      message='La page que vous cherchez a été déplacée, supprimée, renommée — ou n’a jamais existé.'
+      ctaHref='/fr'
+      ctaLabel='cd ~/ → retour à l’accueil'
     />
   )
 }

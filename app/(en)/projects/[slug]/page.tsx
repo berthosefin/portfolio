@@ -1,6 +1,7 @@
 import ProjectDetail from '@/components/project-detail'
 import { getProjects, getProjectBySlug } from '@/lib/projects'
 import { pageAlternates } from '@/lib/site'
+import { getDictionary } from '@/lib/i18n'
 import type { Metadata } from 'next'
 
 export async function generateStaticParams() {
@@ -17,9 +18,16 @@ export async function generateMetadata({
   const { slug } = params
   const project = await getProjectBySlug(slug, 'en')
 
+  if (!project) {
+    return {
+      title: getDictionary('en').meta.notFound.title,
+      description: getDictionary('en').meta.notFound.description
+    }
+  }
+
   return {
-    title: project?.metadata.title ?? undefined,
-    description: project?.metadata.summary,
+    title: project.metadata.title,
+    description: project.metadata.summary,
     alternates: pageAlternates(`/projects/${slug}`)
   }
 }
