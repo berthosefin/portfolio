@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Pane from '@/components/tui/pane'
 import PromptLine from '@/components/tui/prompt-line'
 import skillsData from '@/data/skills.json'
-import { ArrowRightIcon } from 'lucide-react'
 
 export default function FeaturedSkills() {
   const featuredSkills = skillsData.categories.flatMap(category =>
@@ -23,15 +22,18 @@ export default function FeaturedSkills() {
             </span>
           ))}
         </div>
-        <div className='mt-4 text-right'>
+      </Pane>
+        <div className='mt-3 text-right'>
           <Link
             href='/skills'
-            className='text-xs text-muted-foreground transition-colors hover:text-brand'
+            className='text-sm text-muted-foreground transition-colors hover:text-brand'
           >
-            view all <ArrowRightIcon className='inline h-3 w-3' />
+            <span className='select-none text-emerald-600 dark:text-emerald-400'>
+              $
+            </span>{' '}
+            cd /skills →
           </Link>
         </div>
-      </Pane>
     </section>
   )
 }
