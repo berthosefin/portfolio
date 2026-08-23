@@ -5,6 +5,7 @@ import PromptLine from '@/components/tui/prompt-line'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import skillsData from '@/data/skills.json'
+import { cn } from '@/lib/utils'
 import { X } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
@@ -34,10 +35,13 @@ type Row = {
   name: string
   brand: boolean
   featured?: boolean
+  dir?: string
+  hiddenCount?: number
 }
 
 export default function Skills() {
   const [query, setQuery] = useState('')
+  const [collapsed, setCollapsed] = useState<Set<string>>(new Set())
 
   const q = query.trim().toLowerCase()
 
@@ -53,22 +57,37 @@ export default function Skills() {
       .filter(branch => branch.leaves.length > 0)
   }, [q])
 
-  const totalSkills = branches.reduce((acc, b) => acc + b.leaves.length, 0)
-  const isFiltered = query.length > 0
+  const toggleBranch = (dir: string) => {
+    setCollapsed(prev => {
+      const next = new Set(prev)
+      if (next.has(dir)) {
+        next.delete(dir)
+      } else {
+        next.add(dir)
+      }
+      return next
+    })
+  }
 
   const rows: Row[] = []
+  let visibleSkills = 0
   branches.forEach((branch, bi) => {
     const isLastBranch = bi === branches.length - 1
     const childPipe = isLastBranch ? '    ' : '│   '
     const brand = branch.dir === 'business-domain'
+    const isCollapsed = !q && collapsed.has(branch.dir)
     rows.push({
       key: `dir-${branch.dir}`,
       connector: isLastBranch ? '└── ' : '├── ',
       kind: 'dir',
       name: `${branch.dir}/`,
-      brand
+      brand,
+      dir: branch.dir,
+      hiddenCount: isCollapsed ? branch.leaves.length : undefined
     })
+    if (isCollapsed) return
     branch.leaves.forEach((leaf, li) => {
+      visibleSkills++
       rows.push({
         key: `leaf-${bi}-${li}`,
         connector: `${childPipe}${li === branch.leaves.length - 1 ? '└── ' : '├── '}`,
@@ -79,6 +98,9 @@ export default function Skills() {
       })
     })
   })
+
+  const visibleBranches = branches.length
+  const isFiltered = query.length > 0
 
   return (
     <div>
@@ -113,7 +135,7 @@ export default function Skills() {
       </div>
 
       <Pane label='~/skills' contentClassName='overflow-x-auto p-4'>
-        <div className='whitespace-nowrap text-sm leading-[1.8]'>
+        <div className='whitespace-pre text-sm leading-[1.8]'>
           <p className='font-medium text-foreground'>~/skills</p>
 
           {rows.map(row => (
@@ -125,25 +147,40 @@ export default function Skills() {
               >
                 {row.connector}
               </span>
-              <span
-                className={
-                  row.kind === 'dir'
-                    ? row.brand
-                      ? 'font-medium text-brand'
-                      : 'font-medium text-foreground'
-                    : row.featured
-                      ? 'text-foreground'
-                      : 'text-muted-foreground'
-                }
-              >
-                {row.name}
-              </span>
+              {row.kind === 'dir' ? (
+                <button
+                  type='button'
+                  onClick={() => row.dir && toggleBranch(row.dir)}
+                  aria-expanded={row.hiddenCount === undefined}
+                  className={cn(
+                    'cursor-pointer font-medium transition-colors',
+                    row.brand
+                      ? 'text-brand hover:text-brand/70'
+                      : 'text-foreground hover:text-brand'
+                  )}
+                >
+                  {row.name}
+                  {row.hiddenCount !== undefined && (
+                    <span className='font-normal text-muted-foreground'>
+                      {' '}({row.hiddenCount})
+                    </span>
+                  )}
+                </button>
+              ) : (
+                <span
+                  className={
+                    row.featured ? 'text-foreground' : 'text-muted-foreground'
+                  }
+                >
+                  {row.name}
+                </span>
+              )}
             </p>
           ))}
 
           <p className='mt-3 text-muted-foreground'>
-            {branches.length} director{branches.length === 1 ? 'y' : 'ies'},{' '}
-            {totalSkills} skill{totalSkills === 1 ? '' : 's'}
+            {visibleBranches} director{visibleBranches === 1 ? 'y' : 'ies'},{' '}
+            {visibleSkills} skill{visibleSkills === 1 ? '' : 's'}
           </p>
         </div>
       </Pane>
