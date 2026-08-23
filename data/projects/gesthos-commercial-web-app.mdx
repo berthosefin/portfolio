@@ -18,15 +18,52 @@ tags: ['TanStack Start', 'Prisma', 'shadcn/ui', 'Better Auth', 'TanStack Query']
 Complete, centralized commercial management system designed for small and
 medium businesses that want to digitalize their sales processes.
 
+## Why Gesthos Commercial exists
+
+Quotes live in Word, stock lives in a spreadsheet, receipts live in a
+notebook — and nobody can answer "what did we actually sell this month?"
+without an afternoon of reconstruction. Gesthos Commercial puts the whole
+chain in one place, so a sale entered once flows through delivery, invoicing,
+inventory, and reporting on its own.
+
 ## Features
 
 - **Partners (Clients & Suppliers)**: Unified records with full transaction history
 - **Product & Service Catalog**: Centralized repository with multi-VAT handling
 - **Purchasing & Supply**: Purchase orders, goods receipts, supplier invoices
-- **Sales & Quotations**: Quotes, orders, delivery notes, customer invoicing
-- **Inventory Management**: Multi-warehouse, FIFO/LIFO, low-stock alerts
+- **Sales & Quotations**: Quotes, orders, delivery notes, customer invoicing, credit notes
+- **Inventory Management**: Multi-warehouse, FIFO/LIFO valuation, low-stock alerts
 - **Cash Register & Payments**: Collections, disbursements, reconciliation
 - **Dashboard & Reports**: Real-time KPIs, PDF/Excel exports
+
+## From quote to payment
+
+Every document in the sales chain knows its neighbors, so progress is tracked
+without re-entering data:
+
+| Document | Direction | Role in the chain |
+| --- | --- | --- |
+| Quotation | Sales | Offer sent to the customer, convertible into an order |
+| Sales order | Sales | Confirmed deal that drives fulfillment |
+| Delivery note | Sales | Goods shipped, evidence of delivery |
+| Invoice | Sales | Amount due, feeds revenue KPIs |
+| Credit note | Sales | Correction after a return or discount |
+| Purchase order | Purchasing | Goods ordered from a supplier |
+| Goods receipt | Purchasing | Stock in, checked against PO and invoice |
+| Supplier invoice | Purchasing | Payable registered for payment |
+
+## Stock and cash, kept honest
+
+Inventory is valued per warehouse with FIFO or LIFO, and low-stock alerts
+surface what needs reordering before it blocks a sale. On the cash side,
+collections and disbursements are recorded as they happen and reconciled, so
+the register matches reality at the end of the day.
+
+## Access model
+
+Like Gesthos TVA, accounts are provisioned by an administrator rather than
+open self-signup — each business gets an isolated environment configured for
+its own partners, catalog, and warehouses.
 
 ## Tech Stack
 

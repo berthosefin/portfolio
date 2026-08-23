@@ -15,14 +15,63 @@ tags: ['Next.js', 'TypeScript', 'Zustand', 'TanStack Query', 'shadcn/ui', 'Zod']
 
 # Kotisthos
 
-Complete ERP system designed for associations with multiple management modules.
+Multi-tenant SaaS platform that automates dues tracking for families,
+associations, classes, and professional teams — configurable contribution
+rules, real-time payments, zero paperwork.
 
-## Features
+## Why Kotisthos exists
 
-- **Members Management**: Complete CRUD for member data
-- **Subscriptions**: Track membership fees and payments
-- **Accounting**: Double-entry bookkeeping
-- **Dashboard**: Real-time statistics and insights
+Group dues are usually tracked in a shared spreadsheet: someone forgets to
+update it, partial payments break the math, and chasing late payers becomes a
+part-time job. Kotisthos replaces the spreadsheet with rules that generate
+their own periods, statuses that update themselves, and receipts that issue
+themselves — so the only manual act left is recording a payment.
+
+## How it works
+
+1. **Create your group** — a Super Admin sets up the organization and assigns an administrator
+2. **Add members** — CSV import or manual entry; credentials are generated automatically
+3. **Define the rules** — amount, frequency (monthly, weekly, or quarterly), due day; periods are generated up to 12 months ahead
+4. **Track in real time** — recovery rate, top late payers, and upcoming deadlines at a glance
+
+Every payment is recorded against its period — full, partial, or in advance
+across multiple periods — and all dependent statuses recalculate instantly.
+A nightly cron job closes the loop by flipping overdue unpaid periods to
+late automatically, so nobody has to remember to do it.
+
+## Statuses that speak for themselves
+
+Each contribution carries one precise, color-coded status:
+
+| Status | Meaning | Set by |
+| --- | --- | --- |
+| Paid | Period fully covered | Instant recalculation |
+| Partial | Some of the amount received | Instant recalculation |
+| Advance | Covers future periods too | Instant recalculation |
+| Pending | Due date not yet reached | Rule generation |
+| Late | Past due and unpaid | Nightly cron |
+
+## Three roles, three isolated spaces
+
+| Capability | Super Admin | Admin | Member |
+| --- | --- | --- | --- |
+| Manage groups & subscription plans | ✓ | | |
+| Assign admins, block/unblock groups | ✓ | | |
+| Platform-wide metrics dashboard | ✓ | | |
+| Manage members & contribution rules | | ✓ | |
+| Record payments, issue PDF receipts | | ✓ | |
+| Recovery dashboard, CSV/Excel exports | | ✓ | |
+| View own dues, history & alerts | | | ✓ |
+| Anonymous aggregate view of the group | | | ✓ |
+
+Tenants are hermetically isolated: no data crosses from one group to
+another, and each role sees exactly its own slice.
+
+## Traction and outputs
+
+The product landing reports 240+ active groups, 4 800+ members managed, and
+a 97% satisfaction rate. Every payment can emit a PDF receipt, and any admin
+can export the full payment history to CSV or Excel in one click.
 
 ## Tech Stack
 

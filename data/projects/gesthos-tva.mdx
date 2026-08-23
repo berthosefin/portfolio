@@ -20,13 +20,42 @@ Web application for VAT management that lets businesses handle their purchase
 and sales invoices, monitor tax obligations, and file VAT declarations in a
 structured, fully traceable way.
 
+## Why Gesthos TVA exists
+
+For many small businesses, VAT season means spreadsheets: collected and
+deductible amounts reconciled by hand, declarations rebuilt from memory, and
+past filings buried in folders. Gesthos TVA turns that into a single workflow
+where every declaration traces back to its source documents — and survives an
+audit.
+
 ## Features
 
 - **Accounting Documents**: Purchase/sales entries with automatic VAT & TTC computation
 - **4-step Declaration Flow**: Selection, adjustment, summary, validation
 - **Dashboard & Statistics**: KPIs, monthly trends, declaration history table
+- **Legal Archiving**: Filed declarations close their period and stay retrievable
+- **FEC Export**: Generates a Fichier des Écritures Comptables, the legally required format for accountants and auditors
 - **Multi-company**: Admin manages companies and users; users see their own data only
 - **CSV/PDF Export**: Export documents and generate declaration PDFs
+
+## The declaration flow
+
+| Step | Focus | Result |
+| --- | --- | --- |
+| 1 · Selection | Gather the period's purchase and sales documents | Complete document set |
+| 2 · Adjustment | Reconcile VAT collected vs deductible, correct entries | Validated amounts |
+| 3 · Summary | Review totals per VAT rate before filing | Declaration preview |
+| 4 · Validation | Lock the period and file | Archived declaration + PDF |
+
+Each validated declaration keeps its link to the underlying documents, so the
+answer to "where does this number come from?" is always two clicks away.
+
+## Built for compliance
+
+Closed periods are archived rather than deleted, and the FEC export produces
+the standard accounting file that chartered accountants expect. Accounts are
+provisioned by an administrator instead of open self-signup, which keeps every
+company's fiscal data isolated behind the multi-company model.
 
 ## Tech Stack
 

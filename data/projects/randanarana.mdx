@@ -21,14 +21,77 @@ Rename files in a directory to random alphanumeric names, keeping their
 extensions. A Rust reimplementation of an existing bash script, with tests,
 CI, and the same CLI and behavior. Published on crates.io.
 
+## Why randanarana exists
+
+Sometimes a directory full of `IMG_2020.jpg` and `Screenshot from 2026-...`
+files just needs to stop being identifiable — for testing bulk-processing
+pipelines, anonymizing fixtures, or shuffling photo collections. The original
+bash script did the job until it didn't; this rewrite keeps the exact CLI and
+behavior but adds type safety, real error handling, tests, and automated
+releases.
+
+## Try it
+
+```text
+$ randanarana ~/Pictures
+Target: /home/thos/Pictures
+Items to rename (3):
+  IMG_2020.jpg -> 7Qkz3YpT.jpg
+  photo.png    -> Lw4aVb9x.png
+  notes.txt    -> VtS8CwQj.txt
+
+Rename these 3 items? [y/N] y
+
+Done: 3 renamed, 0 skipped, 0 failed.
+```
+
+Made a mistake? Every renaming run records itself in a hidden manifest:
+
+```text
+$ randanarana undo ~/Pictures
+Target: /home/thos/Pictures
+2 items to restore:
+  7Qkz3YpT.jpg -> IMG_2020.jpg
+  Lw4aVb9x.png -> photo.png
+
+Restore these 2 items? [y/N] y
+
+Done: 2 restored, 0 skipped, 0 failed.
+```
+
 ## Features
 
 - **Rename**: Files get random `a-zA-Z0-9` names, extensions are preserved
-- **Undo**: Restore the last rename run via a hidden manifest (`.randanarana-undo.json`)
+- **Undo**: Restore the last rename run via `.randanarana-undo.json`
 - **Dry-run**: Preview changes with `-n` without touching anything
 - **Recursive & Interactive**: Process subdirectories with `-r`, confirm each item with `-i`
-- **Options**: Custom length, prefix/suffix, force mode, dirs rename with `-D`
-- **Prebuilt binaries**: Available for Linux, macOS and Windows on GitHub Releases
+- **Options**: Custom length, prefix/suffix, force mode, directory rename with `-D`
+- **Prebuilt binaries**: Linux, macOS and Windows on GitHub Releases, plus an installer script
+
+## Install
+
+```bash
+cargo binstall randanarana   # prebuilt binaries (recommended)
+cargo install randanarana    # build from source via crates.io
+```
+
+## Behavior guarantees
+
+- Hidden items (leading dot) are never touched — including the undo manifest itself
+- Names already matching the random pattern are skipped unless `--force` is passed
+- The preview truncates beyond 20 items with an explicit note instead of flooding the terminal
+- Interrupting a run exits with code `130`, and the partial run can still be undone from the manifest
+- `undo` fails safe: entries whose new name no longer exists are skipped; if an original name is taken, nothing is silently overwritten
+
+## Release engineering
+
+Releases run themselves: every push to `main` makes release-plz open a
+version-bump PR derived from conventional commits and the CHANGELOG. Merging
+it tags the release, publishes the crate to crates.io, and hands off to
+cargo-dist, which attaches cross-platform prebuilt binaries and an installer
+script to the GitHub Release. CI gates every change with `fmt`, `clippy -D
+warnings`, and integration tests built on assert_cmd + tempfile that exercise
+real renames in throwaway directories.
 
 ## Tech Stack
 

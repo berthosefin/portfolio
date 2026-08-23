@@ -14,15 +14,47 @@ tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'shadcn/ui', 'Zustand', 'TanStac
 
 # VolaFin
 
-Personal finance management platform for tracking money.
+Personal finance management platform built around one question: how much can
+I actually spend? *Vola* means money in Malagasy — the rest is FINance.
+
+## Why VolaFin exists
+
+A bank balance is a liar by omission: it shows what you have, not what is
+already spoken for. Rent due Friday, the subscription renewing next week —
+money that looks available and isn't. VolaFin computes a Real Available
+Balance in real time so the number you see is the number you can spend.
+
+## The Real Available Balance
+
+Gross balances across every account, minus everything already committed to
+upcoming charges:
+
+| | Amount |
+| --- | --- |
+| Gross balance (all accounts) | 2 180 000 Ar |
+| Committed (upcoming recurring charges) | -939 500 Ar |
+| **Real available balance** | **1 240 500 Ar** |
+
+The figure updates live as transactions and schedules change — no month-end
+surprise, no mental arithmetic.
 
 ## Features
 
-- **Multi-Account Management**: Bank accounts, cash, mobile money
+- **Multi-Account Management**: Bank accounts, cash, Mobile Money — one unified dashboard
+- **Real Available Balance**: What you can truly spend after committed charges (see above)
 - **Income & Expenses Tracking**: Categorized transactions
-- **Recurring Expenses**: Automated tracking
-- **Real-time Balance**: Available balance across all accounts (SDR)
+- **Recurring Expenses**: Schedules generated and tracked automatically
+- **Financial Forecasts**: Balance evolution charts that surface tight months before they happen
+- **Savings Goals**: Set targets, track contributions, celebrate completion
 - **Admin Dashboard**: Full control over finances
+- **Enhanced Security**: Secure authentication, encrypted tokens, private data
+
+## In your pocket, not just your browser
+
+VolaFin ships as an Android app distributed through versioned GitHub
+Releases (currently v1.3.0) — installable without any app store — alongside
+the web application. The interface is bilingual English/French thanks to
+next-intl.
 
 ## Tech Stack
 
