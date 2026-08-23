@@ -4,7 +4,7 @@
 
 ### Requirement: Dual-state header switchers
 
-Header controls representing an either/or state — language and color theme — SHALL display all available options simultaneously in terminal idiom: the selected option is highlighted in the brand color (locale codes additionally wrapped in literal brackets), rendered as plain content rather than a control; unselected options are muted, become brand-colored on hover/focus, and are individually actionable so selecting a target takes one click. The theme control SHALL expose two discrete targets — moon for dark, sun for light — instead of a single cycling button.
+Header controls representing an either/or state — language and color theme — SHALL display all available options simultaneously in terminal idiom, at fixed positions regardless of state (locale reads `en fr`, theme reads moon-sun). The selected option SHALL be highlighted in the brand color and wrapped in literal square brackets (`[en]`, `[☾]`) laid out inline beside the glyph, rendered as plain content rather than a control; unselected options are muted, become brand-colored on hover/focus, and are individually actionable so selecting a target takes one click. Options within a control SHALL keep a small breathing gap between targets. The theme control SHALL expose two discrete targets — moon for dark, sun for light — instead of a single cycling button.
 
 #### Scenario: Theme target switches directly
 

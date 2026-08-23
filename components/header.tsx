@@ -53,8 +53,10 @@ export default function Header({
         </div>
 
         <div className='flex items-center gap-2'>
-          <LocaleSwitcher />
-          <ThemeToggle />
+          <div className='flex items-center gap-3'>
+            <LocaleSwitcher />
+            <ThemeToggle />
+          </div>
 
           {/* Mobile menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>

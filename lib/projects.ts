@@ -3,8 +3,7 @@ import fs from 'fs'
 import matter from 'gray-matter'
 import path from 'path'
 
-const rootDirectory = (lang: Locale) =>
-  path.join(process.cwd(), 'data', 'projects', lang)
+const rootDirectory = path.join(process.cwd(), 'data', 'projects')
 
 export type Project = {
   metadata: ProjectMetadata
@@ -14,6 +13,7 @@ export type Project = {
 export type ProjectMetadata = {
   title?: string
   summary?: string
+  summaryFr?: string
   role?: string
   publishedAt?: string
   projectUrl?: string
@@ -22,15 +22,25 @@ export type ProjectMetadata = {
   slug: string
 }
 
+function localizedSummary(
+  metadata: Omit<ProjectMetadata, 'slug'>,
+  lang: Locale
+): string | undefined {
+  return lang === 'fr' && metadata.summaryFr ? metadata.summaryFr : metadata.summary
+}
+
 export async function getProjectBySlug(
   slug: string,
   lang: Locale = 'en'
 ): Promise<Project | null> {
   try {
-    const filePath = path.join(rootDirectory(lang), `${slug}.mdx`)
+    const filePath = path.join(rootDirectory, `${slug}.mdx`)
     const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
     const { data, content } = matter(fileContent)
-    return { metadata: { ...data, slug }, content }
+    return {
+      metadata: { ...data, slug, summary: localizedSummary(data, lang) },
+      content
+    }
   } catch (error) {
     return null
   }
@@ -40,7 +50,7 @@ export async function getProjects(
   limit?: number,
   lang: Locale = 'en'
 ): Promise<ProjectMetadata[]> {
-  const files = fs.readdirSync(rootDirectory(lang))
+  const files = fs.readdirSync(rootDirectory).filter(file => file.endsWith('.mdx'))
 
   const projects = files
     .map(file => getProjectMetadata(file, lang))
@@ -64,8 +74,8 @@ export function getProjectMetadata(
   lang: Locale = 'en'
 ): ProjectMetadata {
   const slug = filepath.replace(/\.mdx$/, '')
-  const filePath = path.join(rootDirectory(lang), filepath)
+  const filePath = path.join(rootDirectory, filepath)
   const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' })
   const { data } = matter(fileContent)
-  return { ...data, slug }
+  return { ...data, slug, summary: localizedSummary(data, lang) }
 }

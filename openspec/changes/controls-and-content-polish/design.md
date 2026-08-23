@@ -11,9 +11,9 @@ Post-usage feedback after the bilingual launch. Three independent workstreams sh
 
 ## Decisions
 
-### D1 — Table styles live in `.prose` CSS, not MDX components
+### D1 — Tables need GFM parsing plus prose CSS
 
-Root cause of the dots table chaos: `app/globals.css` styles `.prose` headings/links/code/blockquote but has zero `table` rules, and the typography plugin is not registered — markdown `<table>`s render as raw collapsed text. Fix in `@layer components`:
+Root cause of the dots table chaos is two-layered. Parser layer: markdown tables are a GitHub Flavored Markdown extension, not CommonMark — `next-mdx-remote` rendered them as literal pipe text because no `remark-gfm` was installed or passed via `mdxOptions.remarkPlugins`. Fix: add the plugin to `components/mdx-content.tsx`. Style layer: `app/globals.css` styles `.prose` headings/links/code/blockquote but has zero `table` rules, so even correctly parsed tables would render bare. Fix in `@layer components`:
 
 ```css
 .prose table { @apply my-6 w-full border-collapse text-sm; }
@@ -27,8 +27,9 @@ CSS beats an MDX component map here: it covers every current and future table (d
 
 Shared visual grammar across both switchers:
 
-- Active option: brand-colored; locale code additionally wrapped in literal `[ ]` (e.g., `[fr]`); rendered as a `<span>` — no link, no button semantics, plus `aria-current="true"`.
-- Inactive option: `text-muted-foreground`, `hover:text-brand`, real link/button; locale keeps lowercase codes per earlier polish.
+- Active option: brand-colored and wrapped in literal square brackets — for both the locale code (`[fr]`) and the theme icons (`[☾]`/`[☀]`) — rendered as a `<span>` with `aria-current="true"`; no link, no button semantics.
+- Positional order is fixed regardless of state: locale reads `en fr` left-to-right always, icons read moon-sun always; only brackets/color move. Mirrors how tmux/sed-style UIs keep slot positions stable.
+- Inactive option: `text-muted-foreground`, `hover:text-brand`, real link/button; locale keeps lowercase codes per earlier polish. The two control groups are separated by a wider gap (`gap-3`) inside the header cluster.
 
 LocaleSwitcher becomes two adjacent elements: active span + twin `Link`. ThemeToggle becomes two icon buttons (Moon → dark, Sun → light); the icon matching `resolvedTheme` renders as inert highlighted span, the other as button calling `setTheme('dark'|'light')`. Hydration-safety stays on the CSS approach from i18n-polish (both icons server-rendered; visibility/state via `.dark` class). One nuance: which icon is "active" depends on `resolvedTheme`, unknown at SSR — so SSR shows both icons in neutral state and post-hydration one dims via a `dark:` variant class pair rather than conditional rendering, keeping markup stable (no flicker regression). Locale active state is fully SSR-known (route-based).
 

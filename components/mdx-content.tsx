@@ -1,5 +1,6 @@
 import { MDXRemote, MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { JSX } from 'react'
+import remarkGfm from 'remark-gfm'
 import { highlight } from 'sugar-high'
 
 function Code({ children, ...props }: any) {
@@ -18,6 +19,11 @@ export default function MDXContent(
     <MDXRemote
       {...props}
       components={{ ...components, ...(props.components || {}) }}
+      options={{
+        mdxOptions: {
+          remarkPlugins: [remarkGfm]
+        }
+      }}
     />
   )
 }

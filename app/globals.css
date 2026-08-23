@@ -151,4 +151,14 @@
     @apply border-l-2 border-brand/60 not-italic;
     color: hsl(var(--muted-foreground));
   }
+  .prose table {
+    @apply my-6 w-full border-collapse text-sm;
+  }
+  .prose th {
+    @apply border border-border bg-muted px-3 py-1.5 text-left font-semibold;
+    color: hsl(var(--brand));
+  }
+  .prose td {
+    @apply border border-border px-3 py-1.5 align-top;
+  }
 }
