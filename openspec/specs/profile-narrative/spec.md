@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Governs the story the portfolio tells about its owner: a dual-profile narrative presenting him as a builder of complete business management applications with real accounting and payroll experience, and as an open-source/Linux enthusiast — entirely in English.
+Governs the story the portfolio tells about its owner: a dual-profile narrative presenting him as a builder of complete business management applications with real accounting and payroll experience, and as an open-source/Linux enthusiast — delivered bilingually in English and French.
 
 ## Requirements
 
@@ -27,9 +27,16 @@ The narrative SHALL reference verifiable open-source facts: the Hyprland dotfile
 - **WHEN** the narrative mentions dots or randanarana
 - **THEN** the mention is hyperlinked to the corresponding GitHub repository or crates.io page
 
-### Requirement: English-only content
-All user-facing text of the portfolio SHALL be written in English. No locale-switching UI SHALL be exposed in this change; multilanguage support is deferred to future work.
+### Requirement: Bilingual English/French content
 
-#### Scenario: No mixed-language output
-- **WHEN** any page is rendered
-- **THEN** every visible label, heading, paragraph, and call-to-action is in English
+All user-facing text of the portfolio SHALL be available in both English and French. The dual-profile narrative — builder of complete business management applications and open-source/Linux enthusiast — SHALL be fully expressed in each locale. Simulated terminal chrome (commands, flags, paths) remains exempt as defined by the content-localization specification.
+
+#### Scenario: French narrative parity
+
+- **WHEN** a visitor lands on the French home page
+- **THEN** the intro presents both identity pillars in French, with the business-builder pillar visually dominant, mirroring the English narrative structure
+
+#### Scenario: No mixed-language prose
+
+- **WHEN** any page of a given locale is rendered
+- **THEN** every visible label, heading, paragraph, and call-to-action is written entirely in that locale's language, excluding simulated terminal chrome
