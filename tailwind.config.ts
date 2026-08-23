@@ -20,8 +20,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: [...fontFamily.sans],
-        mono: ['var(--font-mono)', ...fontFamily.mono]
+        sans: ['var(--font-jbmono)', ...fontFamily.mono],
+        mono: ['var(--font-jbmono)', ...fontFamily.mono]
       },
       colors: {
         border: 'hsl(var(--border))',

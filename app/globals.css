@@ -4,52 +4,54 @@
 
 @layer base {
   :root {
-    --background: 0 0% 97%;
-    --foreground: 0 0% 3.9%;
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45.1%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 0 0% 3.9%;
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 3.9%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --ring: 173 55% 35%;
-    --radius: 0.5rem;
-    --brand: 173 55% 35%;
-    --brand-foreground: 0 0% 98%;
+    /* Paper-terminal light theme */
+    --background: 40 20% 97%;
+    --foreground: 220 15% 15%;
+    --muted: 40 12% 92%;
+    --muted-foreground: 220 8% 42%;
+    --popover: 0 0% 99%;
+    --popover-foreground: 220 15% 15%;
+    --card: 0 0% 99%;
+    --card-foreground: 220 15% 15%;
+    --border: 40 8% 84%;
+    --input: 40 8% 84%;
+    --primary: 220 15% 15%;
+    --primary-foreground: 40 20% 97%;
+    --secondary: 40 12% 92%;
+    --secondary-foreground: 220 15% 15%;
+    --accent: 40 12% 91%;
+    --accent-foreground: 220 15% 15%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 173 65% 30%;
+    --radius: 0px;
+    --brand: 173 65% 30%;
+    --brand-foreground: 0 0% 100%;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    /* Classic dark terminal, blue-tinted near-black */
+    --background: 220 14% 6%;
+    --foreground: 220 12% 84%;
+    --muted: 220 12% 11%;
+    --muted-foreground: 220 8% 56%;
+    --popover: 220 14% 8%;
+    --popover-foreground: 220 12% 84%;
+    --card: 220 13% 8%;
+    --card-foreground: 220 12% 84%;
+    --border: 220 10% 16%;
+    --input: 220 10% 16%;
+    --primary: 220 12% 84%;
+    --primary-foreground: 220 14% 6%;
+    --secondary: 220 12% 11%;
+    --secondary-foreground: 220 12% 84%;
+    --accent: 220 12% 13%;
+    --accent-foreground: 220 10% 88%;
+    --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 98%;
-    --ring: 173 80% 50%;
-    --brand: 173 80% 50%;
-    --brand-foreground: 0 0% 98%;
+    --ring: 173 70% 48%;
+    --brand: 173 70% 48%;
+    --brand-foreground: 220 14% 6%;
   }
 }
 
@@ -68,7 +70,7 @@
     position: fixed;
     inset: 0;
     z-index: -1;
-    opacity: 0.035;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 256px 256px;
@@ -86,12 +88,14 @@
     }
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
+  @keyframes caret-blink {
+    0%,
+    49% {
       opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
     }
   }
 
@@ -99,7 +103,52 @@
     animation: fade-in-up 0.6s ease-out forwards;
   }
 
-  .animate-fade-in {
-    animation: fade-in 0.4s ease-out forwards;
+  .animate-caret-blink {
+    animation: caret-blink 1.06s step-end infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .animate-caret-blink {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* MDX prose in terminal conventions */
+  .prose {
+    max-width: 70ch;
+  }
+  .prose h2::before {
+    content: '## ';
+    color: hsl(var(--brand));
+  }
+  .prose h3::before {
+    content: '### ';
+    color: hsl(var(--brand) / 0.7);
+  }
+  .prose a {
+    color: hsl(var(--brand));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose a:hover {
+    text-decoration-style: dashed;
+  }
+  .prose code:not(pre code) {
+    @apply border border-border bg-muted px-1 py-0.5 text-[0.85em];
+    color: hsl(var(--brand));
+  }
+  .prose pre {
+    @apply border border-border bg-muted;
+  }
+  .prose blockquote {
+    @apply border-l-2 border-brand/60 not-italic;
+    color: hsl(var(--muted-foreground));
   }
 }

@@ -1,8 +1,6 @@
-'use client'
-
 import { JSX, SVGProps } from 'react'
 
-const navigation = [
+const links = [
   {
     name: 'LinkedIn',
     href: 'https://www.linkedin.com/in/berthose-fin-randrianantenaina-7874b713b/',
@@ -30,32 +28,29 @@ const navigation = [
   }
 ]
 
-export default function Footer() {
+export default function StatusBar() {
   return (
-    <footer className='py-8'>
-      <div className='container max-w-3xl'>
-        <div className='mb-6 h-px bg-gradient-to-r from-transparent via-border to-transparent' />
-        <div className='md:flex md:items-center md:justify-between'>
-          <div className='flex justify-center space-x-6 md:order-2'>
-            {navigation.map(item => (
-              <a
-                key={item.name}
-                href={item.href}
-                target='_blank'
-                rel='noreferrer noopener'
-                className='text-muted-foreground transition-colors hover:text-brand'
-              >
-                <span className='sr-only'>{item.name}</span>
-                <item.icon aria-hidden='true' className='h-5 w-5' />
-              </a>
-            ))}
-          </div>
-          <div className='mt-8 md:order-1 md:mt-0'>
-            <p className='text-center text-xs leading-5 text-muted-foreground'>
-              &copy; {new Date().getFullYear()} Berthose Fin. All rights
-              reserved.
-            </p>
-          </div>
+    <footer className='border-t border-border bg-card'>
+      <div className='container flex max-w-4xl flex-col items-center justify-between gap-3 py-4 text-xs text-muted-foreground sm:flex-row'>
+        <p>
+          <span className='select-none text-brand'>[0] </span>
+          <span className='text-foreground'>berthose fin</span> — self-taught
+          developer
+        </p>
+        <div className='flex items-center gap-5'>
+          {links.map(item => (
+            <a
+              key={item.name}
+              href={item.href}
+              target='_blank'
+              rel='noreferrer noopener'
+              className='transition-colors hover:text-brand'
+            >
+              <span className='sr-only'>{item.name}</span>
+              <item.icon aria-hidden='true' className='h-4 w-4' />
+            </a>
+          ))}
+          <p>&copy; {new Date().getFullYear()}</p>
         </div>
       </div>
     </footer>

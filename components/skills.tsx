@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Card, CardContent } from '@/components/ui/card'
+import Pane from '@/components/tui/pane'
+import PromptLine from '@/components/tui/prompt-line'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,18 +11,18 @@ import {
   Server,
   Database,
   Terminal,
-  CheckCircle2,
+  Briefcase,
   X
 } from 'lucide-react'
 import skillsData from '@/data/skills.json'
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  'Programming Languages': <Code2 className='h-4 w-4' />,
-  Frontend: <Monitor className='h-4 w-4' />,
-  Backend: <Server className='h-4 w-4' />,
-  Databases: <Database className='h-4 w-4' />,
-  'DevOps & Tools': <Terminal className='h-4 w-4' />,
-  'Testing & Quality Assurance': <CheckCircle2 className='h-4 w-4' />
+  'Business Domain': <Briefcase className='h-3.5 w-3.5' />,
+  'Programming Languages': <Code2 className='h-3.5 w-3.5' />,
+  Frontend: <Monitor className='h-3.5 w-3.5' />,
+  Backend: <Server className='h-3.5 w-3.5' />,
+  Databases: <Database className='h-3.5 w-3.5' />,
+  'DevOps & Tools': <Terminal className='h-3.5 w-3.5' />
 }
 
 export default function Skills() {
@@ -48,11 +49,13 @@ export default function Skills() {
 
   return (
     <section className='py-8'>
+      <PromptLine command='tree ~/skills' className='mb-4' />
+
       <div className='mb-6 flex items-center gap-2'>
         <div className='relative flex-grow'>
           <Input
             type='text'
-            placeholder='Search skills...'
+            placeholder='grep skills...'
             value={filter}
             onChange={e => setFilter(e.target.value)}
             className='pr-10'
@@ -70,33 +73,43 @@ export default function Skills() {
           )}
         </div>
       </div>
+
       <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
-        {categories.map(category => (
-          <Card
-            key={category.name}
-            className='overflow-hidden border-border/50 transition-all duration-300 hover:border-brand/20 hover:shadow-md hover:shadow-brand/5'
-          >
-            <CardContent className='p-5'>
-              <h3 className='mb-3 flex items-center gap-2 text-sm font-semibold text-brand'>
-                {categoryIcons[category.name] || (
-                  <Code2 className='h-4 w-4' />
-                )}
-                {category.name}
-              </h3>
-              <div className='flex flex-wrap gap-2'>
+        {categories.map(category => {
+          const isBusiness = category.name === 'Business Domain'
+          return (
+            <Pane
+              key={category.name}
+              label={category.name.toLowerCase()}
+              className={
+                isBusiness ? 'border-brand/40 bg-brand/[0.04]' : undefined
+              }
+            >
+              <div className={'flex flex-wrap gap-2'}>
                 {category.skills.map(skill => (
                   <span
                     key={skill.name}
-                    className='rounded-md bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground transition-colors hover:bg-brand/10 hover:text-brand'
+                    className={`border px-2 py-1 text-xs transition-colors ${
+                      skill.featured
+                        ? isBusiness
+                          ? 'border-brand/50 bg-brand/10 text-brand'
+                          : 'border-border text-foreground hover:border-brand/50 hover:text-brand'
+                        : 'border-border/60 text-muted-foreground'
+                    }`}
                   >
                     {skill.name}
+                    {!skill.featured && <span className='opacity-60'> *</span>}
                   </span>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </Pane>
+          )
+        })}
       </div>
+
+      <p className='mt-6 text-xs text-muted-foreground'>
+        * supporting tools — everything else ships in real projects.
+      </p>
     </section>
   )
 }

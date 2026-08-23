@@ -1,6 +1,6 @@
-import React from 'react'
 import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
+import Pane from '@/components/tui/pane'
+import PromptLine from '@/components/tui/prompt-line'
 import skillsData from '@/data/skills.json'
 import { ArrowRightIcon } from 'lucide-react'
 
@@ -11,29 +11,27 @@ export default function FeaturedSkills() {
 
   return (
     <section className='py-12'>
-      <h2 className='mb-6 text-2xl font-bold'>Key Skills</h2>
-      <Card className='overflow-hidden border-border/50 transition-all duration-300 hover:border-brand/20 hover:shadow-md hover:shadow-brand/5'>
-        <CardContent className='p-5'>
-          <div className='flex flex-wrap gap-2'>
-            {featuredSkills.map(skill => (
-              <span
-                key={skill.name}
-                className='rounded-full bg-brand/10 px-3 py-1.5 text-sm font-medium text-brand transition-colors hover:bg-brand/20'
-              >
-                {skill.name}
-              </span>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-      <div className='mt-4 text-right'>
-        <Link
-          href='/skills'
-          className='inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand'
-        >
-          View all skills <ArrowRightIcon className='h-3 w-3' />
-        </Link>
-      </div>
+      <PromptLine command='grep -i "featured" ~/skills.json' className='mb-4' />
+      <Pane label='~/skills --featured'>
+        <div className='flex flex-wrap gap-2'>
+          {featuredSkills.map(skill => (
+            <span
+              key={skill.name}
+              className='border border-border px-2 py-1 text-xs text-secondary-foreground transition-colors hover:border-brand/50 hover:text-brand'
+            >
+              {skill.name}
+            </span>
+          ))}
+        </div>
+        <div className='mt-4 text-right'>
+          <Link
+            href='/skills'
+            className='text-xs text-muted-foreground transition-colors hover:text-brand'
+          >
+            view all <ArrowRightIcon className='inline h-3 w-3' />
+          </Link>
+        </div>
+      </Pane>
     </section>
   )
 }

@@ -12,6 +12,9 @@ import { z } from 'zod'
 
 type Inputs = z.infer<typeof ContactFormSchema>
 
+const fieldLabel =
+  'mb-1.5 block text-xs uppercase tracking-wider text-muted-foreground'
+
 export default function ContactForm() {
   const {
     register,
@@ -41,26 +44,27 @@ export default function ContactForm() {
 
   return (
     <section>
-      {/* Form */}
       <div className='relative'>
         <form
           onSubmit={handleSubmit(processForm)}
-          className='mt-8 lg:flex-auto'
+          className='mt-8 first:mt-0 lg:flex-auto'
           noValidate
         >
           <div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
             {/* Name */}
             <div>
+              <label htmlFor='name' className={fieldLabel}>
+                from (name)
+              </label>
               <Input
                 id='name'
                 type='text'
-                placeholder='Name'
+                placeholder='Jane Doe'
                 autoComplete='given-name'
                 {...register('name')}
               />
-
               {errors.name?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='ml-1 mt-2 text-sm text-destructive'>
                   {errors.name.message}
                 </p>
               )}
@@ -68,16 +72,18 @@ export default function ContactForm() {
 
             {/* Email */}
             <div>
+              <label htmlFor='email' className={fieldLabel}>
+                reply-to (email)
+              </label>
               <Input
                 type='email'
                 id='email'
                 autoComplete='email'
-                placeholder='Email'
+                placeholder='jane@example.com'
                 {...register('email')}
               />
-
               {errors.email?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='ml-1 mt-2 text-sm text-destructive'>
                   {errors.email.message}
                 </p>
               )}
@@ -85,14 +91,12 @@ export default function ContactForm() {
 
             {/* Message */}
             <div className='sm:col-span-2'>
-              <Textarea
-                rows={4}
-                placeholder='Message'
-                {...register('message')}
-              />
-
+              <label htmlFor='message' className={fieldLabel}>
+                body (message)
+              </label>
+              <Textarea rows={5} placeholder='...' {...register('message')} />
               {errors.message?.message && (
-                <p className='ml-1 mt-2 text-sm text-rose-400'>
+                <p className='ml-1 mt-2 text-sm text-destructive'>
                   {errors.message.message}
                 </p>
               )}
@@ -102,17 +106,11 @@ export default function ContactForm() {
             <Button
               type='submit'
               disabled={isSubmitting}
-              className='w-full disabled:opacity-50'
+              className='w-full bg-brand text-brand-foreground hover:bg-brand/90 disabled:opacity-50'
             >
-              {isSubmitting ? 'Sending...' : 'Send'}
+              {isSubmitting ? 'sending...' : '[ send message ]'}
             </Button>
           </div>
-          {/* <p className='mt-4 text-xs text-muted-foreground'>
-            By submitting this form, I agree to the{' '}
-            <Link href='/privacy' className='font-bold'>
-              privacy&nbsp;policy.
-            </Link>
-          </p> */}
         </form>
       </div>
     </section>

@@ -6,8 +6,8 @@ import { formatDate } from '@/lib/utils'
 import { FileCode2 } from 'lucide-react'
 
 const ProjectPlaceholder = () => (
-  <div className='flex h-72 w-full items-center justify-center rounded-lg bg-muted sm:h-60'>
-    <FileCode2 className='h-24 w-24 text-muted-foreground/50' />
+  <div className='flex h-56 w-full items-center justify-center border-b border-border bg-muted'>
+    <FileCode2 className='h-16 w-16 text-muted-foreground/40' />
   </div>
 )
 
@@ -17,50 +17,47 @@ export default function Projects({
   projects: ProjectMetadata[]
 }) {
   return (
-    <ul className='grid grid-cols-1 gap-8 sm:grid-cols-2'>
+    <ul className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
       {projects.map(project => (
         <li key={project.slug} className='group'>
-          <Link href={`/projects/${project.slug}`}>
-            <div className='relative h-72 w-full overflow-hidden rounded-lg border border-border bg-muted transition-all duration-300 group-hover:border-brand/30 group-hover:shadow-lg group-hover:shadow-brand/5 sm:h-60'>
-              {project.image ? (
+          <Link
+            href={`/projects/${project.slug}`}
+            className='block border border-border bg-card transition-colors hover:border-brand/50'
+          >
+            {project.image ? (
+              <div className='relative h-52 w-full overflow-hidden border-b border-border sm:h-44'>
                 <Image
                   src={project.image}
                   alt={project.title || ''}
                   fill
-                  className='object-cover object-center transition-all duration-500 group-hover:scale-105'
+                  className='object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]'
                 />
-              ) : (
-                <ProjectPlaceholder />
-              )}
+              </div>
+            ) : (
+              <ProjectPlaceholder />
+            )}
 
-              <div className='absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent' />
-
-              <div className='absolute bottom-0 left-0 right-0 p-4'>
-                <h2 className='line-clamp-1 text-lg font-semibold text-white'>
+            <div className='p-4'>
+              <div className='flex items-baseline justify-between gap-3'>
+                <h2 className='truncate text-sm font-semibold text-foreground'>
                   {project.title}
                 </h2>
-                <p className='mt-0.5 line-clamp-1 text-xs text-white/70'>
+                <span className='shrink-0 text-xs text-muted-foreground'>
                   {formatDate(project.publishedAt ?? '')}
-                </p>
-
-                {project.tags && project.tags.length > 0 && (
-                  <div className='mt-2 flex flex-wrap gap-1.5'>
-                    {project.tags.slice(0, 3).map(tag => (
-                      <span
-                        key={tag}
-                        className='rounded-full bg-white/15 px-2 py-0.5 text-[10px] text-white/90 backdrop-blur-sm'
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <span className='rounded-full bg-white/15 px-2 py-0.5 text-[10px] text-white/70 backdrop-blur-sm'>
-                        +{project.tags.length - 3}
-                      </span>
-                    )}
-                  </div>
-                )}
+                </span>
               </div>
+
+              {project.summary && (
+                <p className='mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground'>
+                  {project.summary}
+                </p>
+              )}
+
+              {project.tags && project.tags.length > 0 && (
+                <p className='mt-3 truncate text-xs text-brand'>
+                  [{project.tags.join('] [')}]
+                </p>
+              )}
             </div>
           </Link>
         </li>

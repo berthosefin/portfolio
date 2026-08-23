@@ -1,16 +1,15 @@
 import ContactForm from '@/components/contact-form'
+import Pane from '@/components/tui/pane'
+import PromptLine from '@/components/tui/prompt-line'
 
 export default function ContactPage() {
   return (
-    <section className='pb-24 pt-32'>
-      <div className='container max-w-3xl'>
-        <h1 className='mb-2 text-3xl font-bold tracking-tight'>
-          Let&apos;s talk about your project
-        </h1>
-        <p className='mb-8 text-sm text-muted-foreground'>
-          Have a project in mind? Reach out and let&apos;s discuss it.
-        </p>
-        <ContactForm />
+    <section className='pb-24 pt-28'>
+      <div className='container max-w-4xl'>
+        <PromptLine command='mail -s "project inquiry" thos' className='mb-8' />
+        <Pane label='~/contact --compose'>
+          <ContactForm />
+        </Pane>
       </div>
     </section>
   )

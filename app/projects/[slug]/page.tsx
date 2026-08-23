@@ -1,8 +1,9 @@
 import GithubIcon from '@/components/github-icon'
 import MDXContent from '@/components/mdx-content'
+import { Globe } from 'lucide-react'
 import { getProjectBySlug, getProjects } from '@/lib/projects'
 import { formatDate } from '@/lib/utils'
-import { ArrowLeftIcon, ExternalLink, Globe } from 'lucide-react'
+import { ArrowLeftIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -30,18 +31,20 @@ export default async function Project({
     metadata
 
   return (
-    <section className='pb-24 pt-32'>
+    <section className='pb-24 pt-28'>
       <div className='container max-w-3xl'>
         <Link
           href='/projects'
-          className='mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-brand'
+          className='inline-block text-sm text-muted-foreground transition-colors hover:text-brand'
         >
-          <ArrowLeftIcon className='h-3 w-3' />
-          <span>Back to all projects</span>
+          <span className='select-none text-emerald-600 dark:text-emerald-400'>
+            $
+          </span>{' '}
+          cd ../projects <ArrowLeftIcon className='inline h-3 w-3' />
         </Link>
 
         {image && (
-          <div className='relative mb-8 h-96 w-full overflow-hidden rounded-xl border border-border shadow-lg'>
+          <div className='relative mt-6 h-80 w-full overflow-hidden border border-border sm:h-96'>
             <Image
               src={image}
               alt={title || ''}
@@ -51,25 +54,24 @@ export default async function Project({
           </div>
         )}
 
-        <header>
-          <div className='flex items-start justify-between gap-4'>
-            <div>
-              <h1 className='text-3xl font-bold tracking-tight'>{title}</h1>
-              <p className='mt-2 text-sm text-muted-foreground'>
-                {role === 'Author' ? 'Personal Projects' : 'Project Contributions'}{' '}
-                / {formatDate(publishedAt ?? '')}
-              </p>
-            </div>
-            <div className='flex shrink-0 gap-2'>
+        <header className='mt-8'>
+          <h1 className='text-2xl font-bold tracking-tight'>{title}</h1>
+          <p className='mt-2 text-xs text-muted-foreground'>
+            {role === 'Author' ? 'personal projects' : 'contributions'} ·{' '}
+            {formatDate(publishedAt ?? '')}
+          </p>
+
+          {(projectUrl || liveUrl) && (
+            <div className='mt-5 flex flex-wrap gap-3 text-sm'>
               {projectUrl && (
                 <a
                   href={projectUrl}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-all hover:border-brand/30 hover:text-brand'
+                  className='inline-flex items-center gap-2 border border-border px-3 py-1.5 text-muted-foreground transition-colors hover:border-brand/50 hover:text-brand'
                 >
                   <GithubIcon className='h-4 w-4' />
-                  <span className='hidden sm:inline'>Source</span>
+                  [ source ]
                 </a>
               )}
               {liveUrl && (
@@ -77,30 +79,23 @@ export default async function Project({
                   href={liveUrl}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-xs font-medium text-white transition-all hover:bg-brand/90'
+                  className='inline-flex items-center gap-2 bg-brand px-3 py-1.5 font-medium text-brand-foreground transition-opacity hover:opacity-90'
                 >
                   <Globe className='h-4 w-4' />
-                  <span className='hidden sm:inline'>Live Demo</span>
+                  [ live demo ]
                 </a>
               )}
             </div>
-          </div>
+          )}
 
           {tags && tags.length > 0 && (
-            <div className='mt-4 flex flex-wrap gap-2'>
-              {tags.map(tag => (
-                <span
-                  key={tag}
-                  className='rounded-md bg-brand/10 px-2.5 py-1 text-xs font-medium text-brand'
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <p className='mt-4 text-xs leading-relaxed text-brand'>
+              {`[${tags.join('] [')}]`}
+            </p>
           )}
         </header>
 
-        <main className='prose mt-12 text-justify dark:prose-invert'>
+        <main className='prose mt-10 dark:prose-invert'>
           <MDXContent source={content} />
         </main>
       </div>

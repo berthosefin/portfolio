@@ -1,11 +1,19 @@
 {
   "categories": [
     {
+      "name": "Business Domain",
+      "skills": [
+        { "name": "Accounting", "featured": true },
+        { "name": "Payroll Management", "featured": true },
+        { "name": "VAT Management", "featured": false },
+        { "name": "Commercial Management", "featured": false }
+      ]
+    },
+    {
       "name": "Programming Languages",
       "skills": [
-        { "name": "JavaScript", "featured": true },
         { "name": "TypeScript", "featured": true },
-        { "name": "Python", "featured": false },
+        { "name": "JavaScript", "featured": true },
         { "name": "Rust", "featured": true }
       ]
     },
@@ -14,22 +22,13 @@
       "skills": [
         { "name": "React", "featured": true },
         { "name": "Next.js", "featured": true },
-        { "name": "HTML5", "featured": false },
-        { "name": "CSS3", "featured": false },
-        { "name": "Tailwind CSS", "featured": true },
-        { "name": "shadcn/ui", "featured": true },
-        { "name": "Material-UI", "featured": false },
-        { "name": "Zustand", "featured": true },
-        { "name": "Redux", "featured": false },
-        { "name": "TanStack Query", "featured": true },
-        { "name": "TanStack Table", "featured": false },
-        { "name": "Zod", "featured": false },
         { "name": "TanStack Start", "featured": true },
-        { "name": "Recharts", "featured": true },
-        { "name": "next-intl", "featured": false },
-        { "name": "date-fns", "featured": false },
-        { "name": "jose", "featured": false },
-        { "name": "Sonner", "featured": false }
+        { "name": "TanStack Query", "featured": true },
+        { "name": "shadcn/ui", "featured": true },
+        { "name": "Tailwind CSS", "featured": true },
+        { "name": "Zustand", "featured": true },
+        { "name": "Zod", "featured": false },
+        { "name": "Recharts", "featured": true }
       ]
     },
     {
@@ -37,40 +36,26 @@
       "skills": [
         { "name": "Node.js", "featured": false },
         { "name": "NestJS", "featured": true },
-        { "name": "Express", "featured": false },
-        { "name": "Django", "featured": false }
+        { "name": "Better Auth", "featured": false }
       ]
     },
     {
       "name": "Databases",
       "skills": [
-        { "name": "MongoDB", "featured": false },
         { "name": "PostgreSQL", "featured": true },
-        { "name": "MySQL", "featured": false },
-        { "name": "SQLite", "featured": false },
         { "name": "Prisma", "featured": true }
       ]
     },
     {
       "name": "DevOps & Tools",
       "skills": [
-        { "name": "Cargo", "featured": true },
-        { "name": "Docker", "featured": true },
         { "name": "Git", "featured": true },
+        { "name": "CI/CD", "featured": true },
+        { "name": "Docker", "featured": true },
         { "name": "Linux", "featured": true },
-        { "name": "Vim", "featured": true },
         { "name": "Bash", "featured": true },
-        { "name": "Vercel", "featured": false },
-        { "name": "Netlify", "featured": false },
-        { "name": "Render", "featured": false },
-        { "name": "CI/CD", "featured": false }
-      ]
-    },
-    {
-      "name": "Testing & Quality Assurance",
-      "skills": [
-        { "name": "ESLint", "featured": false },
-        { "name": "Prettier", "featured": false }
+        { "name": "Vim", "featured": true },
+        { "name": "Cargo", "featured": true }
       ]
     }
   ]

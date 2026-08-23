@@ -1,6 +1,7 @@
 'use client'
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import TabBar from '@/components/tui/tab-bar'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -9,10 +10,10 @@ import { ThemeToggle } from './theme-toggle'
 import { Button } from './ui/button'
 
 const links = [
-  { name: 'Home', path: '/' },
-  { name: 'Skills', path: '/skills' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'Contact', path: '/contact' }
+  { name: 'home', path: '/' },
+  { name: 'skills', path: '/skills' },
+  { name: 'projects', path: '/projects' },
+  { name: 'contact', path: '/contact' }
 ]
 
 export default function Header() {
@@ -26,46 +27,20 @@ export default function Header() {
     return pathname.startsWith(path)
   }
 
-  const NavLinks = ({ isMobile = false }) => (
-    <>
-      {links.map(
-        (link, index) =>
-          (isMobile || index !== 0) && (
-            <li key={link.name}>
-              <Link
-                href={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`relative transition-colors hover:text-brand ${
-                  isNavLinkActive(link.path)
-                    ? 'text-foreground'
-                    : 'text-muted-foreground'
-                } ${isMobile ? '' : 'pb-1'}`}
-              >
-                {link.name}
-                {!isMobile && isNavLinkActive(link.path) && (
-                  <span className='absolute -bottom-[2px] left-0 h-[2px] w-full rounded-full bg-brand' />
-                )}
-              </Link>
-            </li>
-          )
-      )}
-    </>
-  )
-
   return (
-    <header className='fixed inset-x-0 top-0 z-50 bg-background/75 py-6 backdrop-blur-sm'>
-      <nav className='container flex max-w-3xl items-center justify-between'>
+    <header className='fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm'>
+      <nav className='container flex h-14 max-w-4xl items-center justify-between gap-4'>
         <Link
           href='/'
-          className='text-xl font-bold tracking-tight text-brand'
+          className='shrink-0 text-sm font-bold text-foreground transition-colors hover:text-brand'
         >
-          Bf<span className='text-foreground'>.</span>
+          <span className='text-brand'>~</span>/thos
         </Link>
 
-        {/* Desktop menu */}
-        <ul className='hidden items-center gap-8 text-sm font-light md:flex'>
-          <NavLinks />
-        </ul>
+        {/* Desktop: nav-as-tabs */}
+        <div className='hidden md:block'>
+          <TabBar />
+        </div>
 
         <div className='flex items-center gap-2'>
           <ThemeToggle />
@@ -78,11 +53,26 @@ export default function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side='left'>
-              <div className='mb-8 text-xl font-bold tracking-tight text-brand'>
-                Bf<span className='text-foreground'>.</span>
+              <div className='mb-8 text-sm font-bold'>
+                <span className='text-brand'>~</span>/thos
               </div>
-              <ul className='flex flex-col gap-4 text-sm font-light text-muted-foreground'>
-                <NavLinks isMobile={true} />
+              <ul className='flex flex-col gap-1 text-sm'>
+                {links.map(link => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`block px-3 py-2 transition-colors ${
+                        isNavLinkActive(link.path)
+                          ? 'border-border bg-accent text-accent-foreground'
+                          : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                      }`}
+                    >
+                      <span className='select-none text-brand'>$ </span>
+                      cd ~/{link.name === 'home' ? '' : link.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </SheetContent>
           </Sheet>
