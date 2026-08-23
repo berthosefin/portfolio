@@ -53,6 +53,31 @@
     --brand: 173 70% 48%;
     --brand-foreground: 220 14% 6%;
   }
+
+  /* sugar-high syntax tokens */
+  :root {
+    --sh-class: #1e60a7;
+    --sh-identifier: #333940;
+    --sh-sign: #6d757e;
+    --sh-property: #0a58ad;
+    --sh-entity: hsl(var(--brand));
+    --sh-jsxliterals: #6266d1;
+    --sh-string: hsl(var(--brand));
+    --sh-keyword: #b05248;
+    --sh-comment: #96908a;
+  }
+
+  .dark {
+    --sh-class: #64aef3;
+    --sh-identifier: #cdd3da;
+    --sh-sign: #8b939e;
+    --sh-property: #8cc6fc;
+    --sh-entity: hsl(var(--brand));
+    --sh-jsxliterals: #a5a9f5;
+    --sh-string: hsl(var(--brand));
+    --sh-keyword: #f47162;
+    --sh-comment: #767e89;
+  }
 }
 
 @layer base {
@@ -143,6 +168,9 @@
   .prose code:not(pre code) {
     @apply border border-border bg-muted px-1 py-0.5 text-[0.85em];
     color: hsl(var(--brand));
+  }
+  .prose pre .sh__token--comment {
+    font-style: italic;
   }
   .prose pre {
     @apply border border-border bg-muted;
